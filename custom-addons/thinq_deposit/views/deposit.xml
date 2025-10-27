@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Deposit Form View -->
+    <record id="view_thinq_deposit_form" model="ir.ui.view">
+        <field name="name">thinq.deposit.form</field>
+        <field name="model">thinq.deposit</field>
+        <field name="arch" type="xml">
+            <form string="Deposit">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" 
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Cancel" type="object" 
+                            invisible="state not in ['draft', 'confirmed']" 
+                            confirm="Are you sure you want to cancel this deposit?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,used"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="type"/>
+                            <field name="date"/>
+                            <field name="journal_id" required="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" options="{'no_create': True}"/>
+                            <field name="amount"/>
+                            <field name="amount_company_currency" invisible="currency_id == company_currency_id"/>
+                            <field name="company_currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="available_amount" readonly="1"/>
+                            <field name="used_amount" readonly="1"/>
+                        </group>
+                    </group>
+                    <!-- Smart notebook History Page -->
+                    <notebook>
+                        <page string="Usage History" invisible="not deposit_line_ids">
+                            <field name="deposit_line_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="move_id"/>
+                                    <field name="amount"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Journal Entry" invisible="not move_id">
+                            <field name="move_id" readonly="1"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Additional notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Deposit List View -->
+    <record id="view_thinq_deposit_list" model="ir.ui.view">
+        <field name="name">thinq.deposit.list</field>
+        <field name="model">thinq.deposit</field>
+        <field name="arch" type="xml">
+            <list string="Deposits" decoration-success="state=='confirmed'" 
+                  decoration-muted="state=='used'" decoration-danger="state=='cancelled'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="type"/>
+                <field name="amount"/>
+                <field name="available_amount"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Deposit Search View -->
+    <record id="view_thinq_deposit_search" model="ir.ui.view">
+        <field name="name">thinq.deposit.search</field>
+        <field name="model">thinq.deposit</field>
+        <field name="arch" type="xml">
+            <search string="Search Deposits">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <separator/>
+                <filter string="Receive (Customer)" name="receive" domain="[('type', '=', 'receive')]"/>
+                <filter string="Send (Vendor)" name="send" domain="[('type', '=', 'send')]"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Available" name="available" domain="[('state', '=', 'confirmed'), ('available_amount', '>', 0)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Partner" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'type'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Deposit Action -->
+    <record id="action_thinq_deposit" model="ir.actions.act_window">
+        <field name="name">Deposits</field>
+        <field name="res_model">thinq.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_thinq_deposit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first deposit!
+            </p>
+            <p>
+                Deposits allow you to manage advance payments from customers or to vendors.
+                You can then apply these deposits to invoices or bills to reduce outstanding amounts.
+            </p>
+        </field>
+    </record>
+</odoo>

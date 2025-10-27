@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.SelectPartnerButton" t-inherit-mode="extension">
+        <xpath expr="//button" position="after">
+            <div class="customer-promotion-info">
+                <h4>Promotion</h4>
+                <div class="customer-promotion-info-body">
+                    <ol t-if="state.promotions">
+                        <t t-foreach="state.promotions" t-as="promo" t-key="promo.reward.id">
+                            <li t-on-click="() => this.clickRewards(promo)" class="promotion-links"><t t-esc="promo.reward.description" /></li>
+                        </t>
+                    </ol>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inter_tranfer_user,inter.tranfer.user,model_inter_tranfer,stock.group_stock_user,1,1,1,0
+access_inter_tranfer_manager,inter.tranfer.manager,model_inter_tranfer,stock.group_stock_manager,1,1,1,1
+access_product_operations_user,product.operations.user,model_product_operations,stock.group_stock_user,1,1,1,1
+access_product_operations_manager,product.operations.manager,model_product_operations,stock.group_stock_manager,1,1,1,1

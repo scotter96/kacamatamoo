@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_thinq_material_user,thinq.material.user,model_thinq_material,stock.group_stock_user,1,1,1,0
+access_thinq_material_manager,thinq.material.manager,model_thinq_material,stock.group_stock_manager,1,1,1,1
+access_thinq_color_user,thinq.color.user,model_thinq_color,stock.group_stock_user,1,1,1,0
+access_thinq_color_manager,thinq.color.manager,model_thinq_color,stock.group_stock_manager,1,1,1,1
+access_thinq_brand_user,thinq.brand.user,model_thinq_brand,stock.group_stock_user,1,1,1,0
+access_thinq_brand_manager,thinq.brand.manager,model_thinq_brand,stock.group_stock_manager,1,1,1,1
+access_thinq_frame_shape_user,thinq.frame.shape.user,model_thinq_frame_shape,stock.group_stock_user,1,1,1,0
+access_thinq_frame_shape_manager,thinq.frame.shape.manager,model_thinq_frame_shape,stock.group_stock_manager,1,1,1,1
+access_thinq_inventory_adjustment_line,access thinq_inventory_adjustment_line,model_thinq_inventory_adjustment_line,stock.group_stock_user,1,1,1,0
+access_thinq_inventory_adjustment,access thinq_inventory_adjustment,model_thinq_inventory_adjustment,stock.group_stock_user,1,1,1,0
+access_stock_picking_box,Box : CRUD,model_stock_picking_box,stock.group_stock_user,1,1,1,0
+access_stock_picking_box_line,Box Line : CRUD,model_stock_picking_box_line,stock.group_stock_user,1,1,1,1
+access_stock_picking_label_layout,access_stock_picking_label_layout,model_stock_picking_label_layout,base.group_user,1,1,1,1

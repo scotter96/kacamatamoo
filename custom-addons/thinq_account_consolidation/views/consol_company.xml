@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_inherit_consolidation" model="ir.ui.view">
+            <field name="name">res.company.form.consolidation</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Consolidation">
+                <group>
+                    <field name="is_consolidation" />
+                    <field name="has_active_subsidiary" invisible="is_consolidation == False"/>
+                    <field name="entity_code" invisible="is_consolidation == False"/>
+                </group>
+                <field name="subsidiary_link_ids" invisible="is_consolidation == False">
+                    <list editable="bottom">
+                        <field name="child_id"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="active"/>
+                    </list>
+                </field>
+                </page>
+            </xpath>
+            </field>
+    </record>
+
+</odoo>

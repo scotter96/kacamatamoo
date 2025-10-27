@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_no_hf" model="report.paperformat">
+            <field name="name">No Margin Format</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+        </record>
+
+        <record id="paperformat_custom_a4" model="report.paperformat">
+            <field name="name">Custom A5 Format</field>
+            <field name="format">custom</field>
+            <field name="page_height">279</field> <!-- in mm -->
+            <field name="page_width">215</field>  <!-- in mm -->
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="dpi">90</field>
+            <field name="header_line" eval="True"/>
+            <field name="header_spacing">5</field>
+        </record>
+
+        <record id="action_report_pos_invoice" model="ir.actions.report">
+            <field name="name">POS Order Invoice</field>
+            <field name="model">pos.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">thinq_pos.report_pos_invoice</field>
+            <field name="report_file">thinq_pos.report_pos_invoice</field>
+            <field name="print_report_name">
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="model_pos_order"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_custom_a4"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence for Customer Deposit (Receive) -->
+    <record id="seq_thinq_deposit_receive" model="ir.sequence">
+        <field name="name">Customer Deposit Sequence</field>
+        <field name="code">thinq.deposit.receive</field>
+        <field name="prefix">CDR/</field>
+        <field name="suffix">/%(year)s</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="use_date_range">True</field>
+    </record>
+
+    <!-- Sequence for Vendor Deposit (Send) -->
+    <record id="seq_thinq_deposit_send" model="ir.sequence">
+        <field name="name">Vendor Deposit Sequence</field>
+        <field name="code">thinq.deposit.send</field>
+        <field name="prefix">VDS/</field>
+        <field name="suffix">/%(year)s</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="use_date_range">True</field>
+    </record>
+</odoo>

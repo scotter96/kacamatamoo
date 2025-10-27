@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Override address section to include city_id -->
+        <record id="view_partner_form_inherit_thinq" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.thinq</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='city']" position="replace">
+                    <field name="city_id" placeholder="City" class="o_address_city" 
+                           readonly="type == 'contact' and parent_id"
+                           options="{'no_create': True}"
+                           context="{'default_state_id': state_id}"/>
+                    <field name="city" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <!-- Hide mobile field -->
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="phone_code" readonly="1" placeholder="+62"/>
+                </xpath> -->
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="other_information" string="Other Information">
+                        <group>
+                            <group string="Other Information" name="other_info_group">
+                                <field name="is_customer_store"/>
+                                <field name="is_customer_b2b"/>
+                                <field name="is_customer_marketplace"/>
+                                <field name="is_vendor"/>
+                                <field name="is_employee"/>
+                            </group>
+                        </group>
+                        <group string="Description" name="description_group">
+                            <div class="alert alert-info" role="alert">
+                                <h5>Field Descriptions:</h5>
+                                <ul>
+                                    <li><strong>Is Customer Store:</strong> Penanda apabila contact merupakan Customer Store.</li>
+                                    <li><strong>Is Customer B2B:</strong> Penanda apabila contact merupakan Customer B2B.</li>
+                                    <li><strong>Is Customer Marketplace:</strong> Penanda apabila contact merupakan Customer Marketplace.</li>
+                                    <li><strong>Is Vendor:</strong> Penanda apabila contact merupakan Vendor.</li>
+                                    <li><strong>Is Employee:</strong> Penanda apabila contact merupakan Employee.</li>
+                                </ul>
+                            </div>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='company_id'][@groups='base.group_multi_company']" position="replace">
+                    <field name="company_ids" widget="many2many_tags" groups="base.group_multi_company" options="{'no_create': True}" readonly="parent_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit list view res.partner -->
+        <record id="view_partner_tree_inherit_thinq" model="ir.ui.view">
+            <field name="name">res.partner.tree.inherit.thinq</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="replace">
+                    <field name="company_ids" widget="many2many_tags" groups="base.group_multi_company"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Customer Action (is_customer = True) -->
+        <record id="customer_action" model="ir.actions.act_window">
+            <field name="name">Customer</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_company', '=', False), ('customer_rank', '&gt;', 0)]</field>
+            <field name="context">{'default_is_company': False, 'default_customer_rank': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new customer.
+                </p>
+                <p>
+                    Here you can manage all your customers.
+                </p>
+            </field>
+        </record>
+
+        <!-- Customer Store Action -->
+        <record id="customer_store_action" model="ir.actions.act_window">
+            <field name="name">Customer Store</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_customer_store', '=', True)]</field>
+            <field name="context">{'default_is_customer_store': True, 'default_customer_rank': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new customer store.
+                </p>
+                <p>
+                    Here you can manage all your customer stores.
+                </p>
+            </field>
+        </record>
+
+        <!-- Customer B2B Action -->
+        <record id="customer_b2b_action" model="ir.actions.act_window">
+            <field name="name">Customer B2B</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_customer_b2b', '=', True)]</field>
+            <field name="context">{'default_is_customer_b2b': True, 'default_customer_rank': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new B2B customer.
+                </p>
+                <p>
+                    Here you can manage all your B2B customers.
+                </p>
+            </field>
+        </record>
+
+        <!-- Vendor Action -->
+        <record id="vendor_action" model="ir.actions.act_window">
+            <field name="name">Vendor</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_vendor', '=', True)]</field>
+            <field name="context">{'default_is_vendor': True, 'default_supplier_rank': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new vendor.
+                </p>
+                <p>
+                    Here you can manage all your vendors.
+                </p>
+            </field>
+        </record>
+
+        <!-- Employee Action -->
+        <record id="employee_action" model="ir.actions.act_window">
+            <field name="name">Employee</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_employee', '=', True)]</field>
+            <field name="context">{'default_is_employee': True}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new employee.
+                </p>
+                <p>
+                    Here you can manage all your employees.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

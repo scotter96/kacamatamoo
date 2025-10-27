@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="view_project_form_inherit_thinq" model="ir.ui.view">
+            <field name="name">project.task.form.thinq</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="allocated_hours" position="before">
+                    <field name="customer_phone"/>
+                    <field name="customer_email"/>
+                    <field name="customer_city_id"/>
+                    <field name="last_contact_date"/>
+                    <field name="no_contact_attempts"/>
+                    <field name="contact_result_id" />
+                    <field name="planned_visit"/>
+                    <field name="visit_status_id"/>
+                </field>
+                <field name="tag_ids" position="attributes">
+                    <attribute name="string">Lead Source</attribute>
+                </field>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

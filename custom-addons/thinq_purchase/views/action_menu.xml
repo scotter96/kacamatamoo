@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <record id="action_window_purchase_report_supplier_performance" model="ir.actions.act_window">
+    <field name="name">Supplier Performance Report</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">purchase.report</field>
+    <field name="view_mode">pivot</field>
+    <field name="view_id" ref="pivot_purchase_report_supplier_performance"/>
+    <field name="path">supplier-performance-report</field>
+    <field name="context">{
+      'search_default_orders': 1,
+      'search_default_filter_date_approve': 1
+      }</field>
+  </record>
+</odoo>

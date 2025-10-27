@@ -1,0 +1,248 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_bundle_all
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-16 10:59+0000\n"
+"PO-Revision-Date: 2021-03-16 10:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.pack_in_single_product_page
+msgid "<b>Pack Details</b>"
+msgstr "<b> Pakketdetails </ b"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.pack_in_single_product_page
+msgid "<b>Pack Products</b>"
+msgstr "<b> Producten inpakken </b>"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.pack_in_single_product_page
+msgid "<b>Quantity: </b>"
+msgstr "<b> Aantal: </b>"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.pack_in_single_product_page
+msgid "<b>Unit Price: </b>"
+msgstr "<b> Eenheidsprijs: </b>"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.product_bundle_product_form_view
+msgid "Add a product"
+msgstr "Voeg een product toe"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_product__cal_pack_price
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_template__cal_pack_price
+msgid "Calculate Pack Price"
+msgstr "Bereken de pakketprijs"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.pack_in_single_product_page
+msgid "Close"
+msgstr "Dichtbij"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__create_uid
+msgid "Created by"
+msgstr "Gemaakt door"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__create_date
+msgid "Created on"
+msgstr "Gemaakt op"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,help:product_bundle_all.field_product_pack__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "Standaard maateenheid die wordt gebruikt voor alle voorraadbewerkingen."
+
+#. module: product_bundle_all
+#. openerp-web
+#: code:addons/product_bundle_all/static/src/xml/pos_product_bundle_pack.xml:0
+#, python-format
+msgid "Discount:"
+msgstr "Korting:"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__display_name
+msgid "Display Name"
+msgstr "Weergavenaam"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__id
+msgid "ID"
+msgstr "ID kaart"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__bi_image
+msgid "Image"
+msgstr "Beeld"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_product__is_pack
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_template__is_pack
+msgid "Is Product Pack"
+msgstr "Is productpakket"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.product_bundle_product_search_view
+msgid "Is a pack"
+msgstr "Is een roedel"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_account_move
+msgid "Journal Entries"
+msgstr "Boekingen"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack____last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__write_date
+msgid "Last Updated on"
+msgstr "Laatst geupdate op"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__name
+msgid "Name"
+msgstr "Naam"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.product_pack_list
+msgid "Pack"
+msgstr "Pack"
+
+#. module: product_bundle_all
+#. openerp-web
+#: code:addons/product_bundle_all/static/src/xml/pos_product_bundle_pack.xml:0
+#, python-format
+msgid "Pack Product"
+msgstr "Product verpakken"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.product_bundle_product_form_view
+msgid "Pack Products"
+msgstr "Verpak producten"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Kassa orders"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_product_product
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__product_id
+msgid "Product"
+msgstr "Product"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_product_pack
+#: model:ir.ui.menu,name:product_bundle_all.menu_product_pack_main
+msgid "Product Pack"
+msgstr "Productpakket"
+
+#. module: product_bundle_all
+#: model:ir.actions.act_window,name:product_bundle_all.action_pack
+msgid "Product Packs"
+msgstr "Productpakketten"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__price
+msgid "Product Price"
+msgstr "Product prijs"
+
+#. module: product_bundle_all
+#: code:addons/product_bundle_all/models/product.py:0
+#, python-format
+msgid "Product Quantity must be 1 or greater than one"
+msgstr "Producthoeveelheid moet 1 of groter zijn dan één"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_product_template
+msgid "Product Template"
+msgstr "Productsjabloon"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__bi_product_template
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_product__pack_ids
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_template__pack_ids
+msgid "Product pack"
+msgstr "Productpakket"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Inkooporderregel"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__qty_uom
+msgid "Quantity"
+msgstr "Hoeveelheid"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Verkooporderregel"
+
+#. module: product_bundle_all
+#: model:ir.model,name:product_bundle_all.model_stock_rule
+msgid "Stock Rule"
+msgstr "Voorraadregel"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,help:product_bundle_all.field_product_pack__price
+msgid ""
+"The sale price is managed from the product template. Click on the 'Configure"
+" Variants' button to set the extra attribute prices."
+msgstr ""
+
+#. module: product_bundle_all
+#: code:addons/product_bundle_all/models/pos_order.py:0
+#, python-format
+msgid ""
+"This transfer has been created from the point of sale session: <a href=# "
+"data-oe-model=pos.order data-oe-id=%d>%s</a>"
+msgstr ""
+"Deze overboeking is aangemaakt van kassa sessie: <a href=# data-oe-"
+"model=pos.order data-oe-id=%d>%s</a>"
+
+#. module: product_bundle_all
+#: model:ir.model.fields,field_description:product_bundle_all.field_product_pack__uom_id
+msgid "Unit of Measure"
+msgstr "Maateenheid"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.product_template_inherit_form
+msgid "Variants"
+msgstr "Varianten"
+
+#. module: product_bundle_all
+#: model_terms:ir.ui.view,arch_db:product_bundle_all.product_template_inherit_form
+msgid "You cannot create variants of the Pack"
+msgstr "U kunt geen varianten van het pakket maken"
+
+#. module: product_bundle_all
+#. openerp-web
+#: code:addons/product_bundle_all/static/src/xml/pos_product_bundle_pack.xml:0
+#: code:addons/product_bundle_all/static/src/xml/pos_product_bundle_pack.xml:0
+#: code:addons/product_bundle_all/static/src/xml/pos_product_bundle_pack.xml:0
+#, python-format
+msgid "at"
+msgstr "op"

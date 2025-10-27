@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Sequence for Reference Number -->
+    <data noupdate="1">
+        <record id="seq_thinq_inventory_adjustment" model="ir.sequence">
+            <field name="name">Inventory Adjustment Sequence</field>
+            <field name="code">thinq.inventory.adjustment</field>
+            <field name="prefix">ADJ/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+    <!-- Form View for thinq.inventory.adjustment -->
+    <record id="view_thinq_inventory_adjustment_form" model="ir.ui.view">
+        <field name="name">thinq.inventory.adjustment.form</field>
+        <field name="model">thinq.inventory.adjustment</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Location Adjustment">
+                <header>
+                    <button name="action_recount"
+                            string="Recount"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_draft"
+                            string="Set to Draft"
+                            type="object"
+                            invisible="state != 'recount' or state != 'moved'"/>
+                    <button name="action_create_inventory_adjustment"
+                            string="Apply Adjustment"
+                            type="object"
+                            invisible="state == 'draft' or state == 'done'"/>
+                    <button name="action_move_missing_items"
+                            string="Move Missing Quantity"
+                            type="object"
+                            invisible="state != 'recount'"/>
+                    <button name="action_scrap_missing_qty"
+                            string="Scrap Missing Quantity"
+                            type="object"
+                            class="btn-danger"
+                            invisible="state == 'draft' or state == 'done'"
+                            confirm="Are you sure you want to directly scrap all items with a negative difference? This action cannot be undone."/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,recount,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="location_id" options="{'no_create': True, 'no_open': True}" readonly="state != 'draft'"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="date_done" readonly="state != 'draft'" invisible="state != 'done'"/>
+                        </group>
+                        <group name="import_group" string="File Upload" invisible="state != 'draft'">
+                            <field name="file_upload" widget="binary" filename="file_name" invisible="state != 'draft'"/>
+                            <field name="file_name" invisible="1"/>
+                            <button name="action_import_from_file"
+                            string="Import From File"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Count List" name="count_list">
+                            <field name="adjustment_line_ids" nolabel="1" readonly="state != 'draft'">
+                                <list mode="list" string="Adjustment Lines" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="default_code"/>
+                                    <field name="qty_counted" string="Counted Qty" sum="Total Counted"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Recount List" name="recount_list">
+                            <field name="recount_line_ids" readonly="state == 'done' or state == 'moved'" nolabel="1" invisible="state == 'draft'" create="false" delete="false">
+                                <list create="false" delete="false" editable="bottom" decoration-danger="qty_difference &lt; 0" decoration-success="qty_difference &gt; 0">
+                                    <field name="product_id" readonly="True"/>
+                                    <field name="default_code"/>
+                                    <field name="location_id" readonly="True" string="Bin Name"/>
+                                    <field name="qty_on_hand" sum="Total On Hand"/>
+                                    <field name="qty_counted" string="Counted Qty" sum="Total Counted"/>
+                                    <field name="qty_difference" sum="Total Difference"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Posting List" name="posting_list">
+                            <field name="adjustment_line_ids" readonly="state == 'done'" nolabel="1" invisible="state == 'draft'" create="false" delete="false">
+                                <list create="false" delete="false" mode="list" string="Adjustment Lines" editable="bottom">
+                                    <field name="product_id" readonly="True"/>
+                                    <field name="default_code"/>
+                                    <field name="location_id" string="Bin Name" readonly="True"/>
+                                    <field name="qty_counted" string="Counted Qty" sum="Total Counted"/>
+                                    <field name="qty_on_hand" sum="Total On Hand"/>
+                                    <field name="qty_sales"/>
+                                    <field name="product_uom_id" string="UoM"/>
+                                    <field name="qty_difference" sum="Total Difference"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Missing QTY List" name="missing_qty_list">
+                            <field name="missing_qty_move_ids" readonly="true" invisible="not missing_qty_move_ids">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="location_id"/>
+                                    <field name="location_dest_id"/>
+                                    <field name="product_uom_qty"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_thinq_inventory_adjustment_tree" model="ir.ui.view">
+        <field name="name">thinq.inventory.adjustment.tree</field>
+        <field name="model">thinq.inventory.adjustment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="location_id"/>
+                <field name="state"/>
+                <field name="company_id" optional="hidden"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_thinq_inventory_adjustment_line_search" model="ir.ui.view">
+        <field name="name">thinq.inventory.adjustment.line.search</field>
+        <field name="model">thinq.inventory.adjustment.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Adjustment Lines">
+                <filter name="has_difference"
+                        string="Has Difference"
+                        domain="[('qty_difference', '!=', 0)]"/>
+                <filter name="negative_difference"
+                        string="Negative Difference"
+                        domain="[('qty_difference', '&lt;', 0)]"/>
+                <filter name="positive_difference"
+                        string="Positive Difference"
+                        domain="[('qty_difference', '&gt;', 0)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action Window -->
+    <record id="action_thinq_inventory_adjustment" model="ir.actions.act_window">
+        <field name="name">Inventory Adjustments</field>
+        <field name="res_model">thinq.inventory.adjustment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem
+        id="menu_thinq_inventory_adjustment"
+        name="Inventory Adjustments"
+        action="action_thinq_inventory_adjustment"
+        parent="stock.menu_stock_inventory_control"
+        sequence="6"/>
+
+</odoo>

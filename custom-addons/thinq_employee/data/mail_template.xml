@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="mail_template_employee_pin" model="mail.template">
+            <field name="name">Employee: PIN</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="subject">Employee PIN - {{ object.name }}</field>
+            <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.work_email or object.partner_id.email or object.user_id.email or object.email_formatted }}</field>
+            <field name="description">Sent Employee's PIN</field>
+            <field name="body_html" type="html">
+                <html>
+                    <body style="font-family: 'Arial', sans-serif; font-size: 14px; color: #333;">
+                        <p>Dear <strong><t t-out="object.name"/></strong>,</p>
+
+                        <p>Your employee PIN has been generated successfully. Please keep this information confidential.</p>
+
+                        <table style="margin: 20px 0; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px 12px; border: 1px solid #ccc; background-color: #f8f8f8;">
+                                    <strong>Employee Name:</strong>
+                                </td>
+                                <td style="padding: 8px 12px; border: 1px solid #ccc;">
+                                    <t t-out="object.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 12px; border: 1px solid #ccc; background-color: #f8f8f8;">
+                                    <strong>Work Email:</strong>
+                                </td>
+                                <td style="padding: 8px 12px; border: 1px solid #ccc;">
+                                    <t t-out="object.work_email"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px 12px; border: 1px solid #ccc; background-color: #f8f8f8;">
+                                    <strong>PIN:</strong>
+                                </td>
+                                <td style="padding: 8px 12px; border: 1px solid #ccc; color: #d63384; font-size: 16px;">
+                                    <t t-out="object.pin"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p>
+                            You may use this PIN for system login, attendance, or internal verification (as applicable).
+                        </p>
+
+                        <p style="margin-top: 30px;">
+                            Best regards,<br/>
+                            <strong><t t-out="object.company_id.name"/></strong><br/>
+                            <span style="font-size: 12px; color: #888;">
+                                <t t-out="object.company_id.phone"/> <t t-if="object.company_id.email">| <t t-out="object.company_id.email"/></t>
+                            </span>
+                        </p>
+                    </body>
+                </html>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Multiple Search Wizard Form View -->
+        <record id="view_multiple_search_wizard_form" model="ir.ui.view">
+            <field name="name">multiple.search.wizard.form</field>
+            <field name="model">multiple.search</field>
+            <field name="arch" type="xml">
+                <form string="Universal Search">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="search_model" invisible="1"/>
+                                <span>Search Documents</span>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group>
+                                <field name="keyword" placeholder="Enter keyword to search..." 
+                                       class="oe_inline" style="font-size: 14px;"/>
+                            </group>
+                            <group>
+                                <field name="search_model" 
+                                       invisible="search_model != 'all'"
+                                       help="Select which type of documents to search"/>
+                            </group>
+                        </group>
+
+                        <div class="oe_clear"/>
+                        
+                        <div style="margin-top: 10px;">
+                            <p class="text-muted">
+                                <i class="fa fa-info-circle" title="Information"></i> 
+                                <strong>Search Tips:</strong><br/>
+                                • <strong>Multiple keywords:</strong> Use comma, semicolon, or new line to separate<br/>
+                                • <strong>Partial match:</strong> Search will find documents containing your keywords<br/>
+                                • <strong>Search fields:</strong> Document number, reference, partner name, and descriptions
+                            </p>
+                        </div>
+                    </sheet>
+                    
+                    <footer>
+                        <button name="action_search" string="Search" type="object" class="btn-primary"/>
+                        <button name="action_discard" string="Cancel" type="object" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Multiple Search Wizard Action -->
+        <record id="action_multiple_search_wizard" model="ir.actions.act_window">
+            <field name="name">Universal Search</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Search Invoices Action -->
+        <record id="action_search_invoices" model="ir.actions.act_window">
+            <field name="name">Search Invoices</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'account.move', 'default_search_model': 'account.move', 'search_type': 'invoice'}</field>
+        </record>
+
+        <!-- Search Bills Action -->
+        <record id="action_search_bills" model="ir.actions.act_window">
+            <field name="name">Search Bills</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'account.move', 'default_search_model': 'account.move', 'search_type': 'bill'}</field>
+        </record>
+
+        <!-- Search Journal Entry Action -->
+        <record id="action_search_journal_entry" model="ir.actions.act_window">
+            <field name="name">Search Journal Entry</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'account.move', 'default_search_model': 'account.move', 'search_type': 'journal_entry'}</field>
+        </record>
+
+        <!-- Search Journal Items Action -->
+        <record id="action_search_journal_items" model="ir.actions.act_window">
+            <field name="name">Search Journal Items</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'account.move.line', 'default_search_model': 'account.move.line', 'search_type': 'journal_items'}</field>
+        </record>
+
+        <!-- Other Search Actions -->
+        <record id="action_search_pos_orders" model="ir.actions.act_window">
+            <field name="name">Search Point of Sale</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'pos.order', 'default_search_model': 'pos.order', 'search_type': 'pos_comprehensive'}</field>
+        </record>
+
+        <record id="action_search_sales_orders" model="ir.actions.act_window">
+            <field name="name">Search Sales Orders</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'sale.order', 'default_search_model': 'sale.order', 'search_type': 'sales_order'}</field>
+        </record>
+
+        <record id="action_search_purchase_orders" model="ir.actions.act_window">
+            <field name="name">Search Purchase Orders</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'purchase.order', 'default_search_model': 'purchase.order', 'search_type': 'purchase_order'}</field>
+        </record>
+
+        <record id="action_search_purchase_requests" model="ir.actions.act_window">
+            <field name="name">Search Purchase Requests</field>
+            <field name="res_model">multiple.search</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'search_model': 'purchase.request', 'default_search_model': 'purchase.request', 'search_type': 'purchase_request'}</field>
+        </record>
+    </data>
+</odoo>

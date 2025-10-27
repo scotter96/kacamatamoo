@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="petty_cash_view_form" model="ir.ui.view">
+            <field name="name">petty.cash.view.form</field>
+            <field name="model">petty.cash</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" 
+                            groups="thinq_petty_cash.group_petty_cash_user" invisible="state != 'draft'"
+                            confirm="Are you sure you want to confirm this petty cash?"/>
+                        <button string="Cancel" name="action_cancel" type="object" 
+                            groups="thinq_petty_cash.group_petty_cash_manager" invisible="state != 'confirmed'"
+                            confirm="Are you sure you want to cancel this petty cash?"/>
+                        <button string="Set to Draft" name="action_draft" type="object" 
+                            groups="thinq_petty_cash.group_petty_cash_user" invisible="state != 'cancelled'"
+                            confirm="Are you sur09-e you want to Reset to Draft this petty cash?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-book" string="Bill" invisible="not move_line_ids"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="state != 'draft'" widget="many2one_avatar" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="petty_cash_type" readonly="state != 'draft'"/>
+                                <field name="date" readonly="state != 'draft'"/>
+                                <field name="currency_id" readonly="state != 'draft'" groups="base.group_multi_currency"/>
+                                <field name="company_id" readonly="state != 'draft'" groups="base.group_multi_company"/>
+                                <field name="note" string="Description" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="product_id" options="{'no_create': True, 'no_open': True}" readonly="state != 'draft'"/>
+                                <field name="qty" readonly="state != 'draft'"/>
+                                <field name="invoiced_qty" invisible="state not in ['confirmed','done']"/>
+                                <field name="uom_id" options="{'no_create': True, 'no_open': True}" readonly="state != 'draft'"/>
+                                <field name="price_unit" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="state != 'draft'"/>
+                                <field name="price_subtotal" sum="Total Subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="move_line_ids" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="petty_cash_view_tree" model="ir.ui.view">
+            <field name="name">petty.cash.view.tree</field>
+            <field name="model">petty.cash</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="partner_id" widget="many2one_avatar"/>
+                    <field name="date"/>
+                    <field name="petty_cash_type"/>
+                    <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="note" string="Description"/>
+                    <field name="qty"/>
+                    <field name="uom_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="price_unit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'" decoration-info="state == 'draft'" decoration-primary="state == 'confirmed'" widget="badge"/>
+                    <field name="is_claimed" string="Bill"
+                           widget="badge"
+                           decoration-success="is_claimed == 'claimed'"
+                           decoration-info="is_claimed == 'not_claimed'"
+                           invisible="petty_cash_type != 'usage'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- <record id="replenish_petty_cash_action" model="ir.actions.act_window">
+            <field name="name">Replenish - Petty Cash</field>
+            <field name="res_model">petty.cash</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('petty_cash_type','=','replenish'), ('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{'default_petty_cash_type': 'replenish'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to start a new Replenish petty cash process.
+                </p>
+                <p>
+                    A petty cash is a small amount of cash on hand used for paying small expenses that are not suitable 
+                    for payment by check or credit card. It is typically used for minor business expenses such as office 
+                    supplies, travel expenses, or other miscellaneous costs.
+                </p>
+            </field>
+        </record> -->
+
+        <!-- <record id="usage_petty_cash_action" model="ir.actions.act_window">
+            <field name="name">Usage - Petty Cash</field>
+            <field name="res_model">petty.cash</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('petty_cash_type','=','usage'), ('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{'default_petty_cash_type': 'usage'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to start a new Usage petty cash process.
+                </p>
+                <p>
+                    A petty cash is a small amount of cash on hand used for paying small expenses that are not suitable 
+                    for payment by check or credit card. It is typically used for minor business expenses such as office 
+                    supplies, travel expenses, or other miscellaneous costs.
+                </p>
+            </field>
+        </record> -->
+
+        <record id="petty_cash_create_invoice_action_server" model="ir.actions.server">
+            <field name="name">Create Bill</field>
+            <field name="model_id" ref="thinq_petty_cash.model_petty_cash"/>
+            <field name="groups_id" eval="[(4, ref('thinq_petty_cash.group_petty_cash_manager'))]"/>
+            <field name="binding_model_id" ref="thinq_petty_cash.model_petty_cash"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records._create_invoice()
+            </field>
+        </record>
+
+        <record id="petty_cash_action" model="ir.actions.act_window">
+            <field name="name">Petty Cash</field>
+            <field name="res_model">petty.cash</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="petty_cash_view_form_inherit_is_claimed" model="ir.ui.view">
+            <field name="name">petty.cash.form.inherit.is.claimed</field>
+            <field name="model">petty.cash</field>
+            <field name="inherit_id" ref="petty_cash_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <div class="float-end">
+                        <field name="is_claimed"
+                            widget="badge"
+                            decoration-success="is_claimed == 'claimed'"
+                            decoration-info="is_claimed == 'not_claimed'"
+                            invisible="petty_cash_type != 'usage'"
+                        />
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="petty_cash_view_form_inherit_analytic_distribution" model="ir.ui.view">
+            <field name="name">petty.cash.form.inherit.analytic.distribution</field>
+            <field name="model">petty.cash</field>
+            <field name="inherit_id" ref="petty_cash_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <group>
+                        <field name="analytic_distribution"
+                               widget="analytic_distribution"
+                               readonly="move_line_ids != False"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+    
+
+</odoo>

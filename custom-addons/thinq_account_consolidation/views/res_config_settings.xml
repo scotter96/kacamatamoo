@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Inherit Accounting settings (Odoo 18) -->
+  <record id="res_config_settings_view_form_inherit_consolidation" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.consolidation</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+
+      <!-- Sisipkan di dalam blok Accounting -->
+      <xpath expr="//app_settings_block[@name='accounting']" position="inside">
+        <h2>Consolidation</h2>
+
+        <div class="row mt16 o_settings_container">
+          <div class="col-12 col-lg-6 o_setting_box">
+            <div class="o_setting_left_pane">
+              <field name="is_consolidation"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="is_consolidation"/>
+              <div class="text-muted">
+                Use this company as a consolidation company. Values are company-specific.
+              </div>
+            </div>
+          </div>
+        </div>
+      </xpath>
+
+    </field>
+  </record>
+</odoo>

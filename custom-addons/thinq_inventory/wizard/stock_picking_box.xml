@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="stock_picking_box_view_form" model="ir.ui.view">
+            <field name="name">stock.picking.box.view.form</field>
+            <field name="model">stock.picking.box</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="picking_id" invisible="1"/>
+                        <field name="available_move_ids" widget="many2many_tags" invisible="1"/>
+                        <field name="selectable_moves" widget="many2many_tags" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page name="box_lines" string="Box Mapping">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="move_ids" domain="[('id','in',parent.selectable_moves)]" widget="many2many_tags"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Assign" name="action_confirm" type="object" confirm="Are you sure?" class="oe_highlight"/>
+                        <button string="Discard" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_picking_box_action" model="ir.actions.act_window">
+            <field name="name">Assign Box</field>
+            <field name="res_model">stock.picking.box</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

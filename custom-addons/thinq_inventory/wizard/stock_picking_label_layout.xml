@@ -1,0 +1,30 @@
+<odoo>
+    <record id="view_stock_picking_label_layout_wizard" model="ir.ui.view">
+        <field name="name">stock.picking.label.layout.wizard.form</field>
+        <field name="model">stock.picking.label.layout</field>
+        <field name="arch" type="xml">
+            <form string="Print Product Labels">
+                <group>
+                    <field name="picking_id" readonly="1"/>
+                    <field name="product_ids" widget="many2many_tags" 
+                           domain="[('id', 'in', context.get('available_products', []))]"/>
+                </group>
+                <footer>
+                    <button string="Print Labels" type="object" name="action_print_labels" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_picking_label_layout_wizard" model="ir.actions.act_window">
+        <field name="name">Print Product Labels</field>
+        <field name="res_model">stock.picking.label.layout</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{
+            'default_picking_id': active_id,
+            'available_products': context.get('available_products', [])
+        }</field>
+    </record>
+</odoo>

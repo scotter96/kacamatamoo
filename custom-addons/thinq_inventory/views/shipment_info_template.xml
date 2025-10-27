@@ -1,0 +1,119 @@
+<odoo>
+<template id="shipment_info_template" name="Shipment Information">
+    <t t-set="title">Result</t>
+    <style>
+        @media (max-width: 600px) {
+            .container-shipment {
+                margin: 0 8px 16px 8px !important;
+                border-radius: 12px !important;
+                padding: 0 !important;
+            }
+            .sender-details {
+                font-size: 18px !important;
+                padding: 8px 10px !important;
+            }
+            .copy-btn {
+                font-size: 18px !important;
+                padding: 12px 10px !important;
+            }
+            .result-title {
+                font-size: 28px !important;
+                padding: 18px 8px 24px 8px !important;
+            }
+            .icon-section {
+                width: 56px !important;
+                height: 56px !important;
+            }
+        }
+        @media (min-width: 601px) {
+            .container-shipment {
+                margin: 0 24px 24px 24px;
+                border-radius: 24px;
+                padding: 0;
+            }
+            .sender-details {
+                font-size: 28px;
+                padding: 12px 18px;
+            }
+            .copy-btn {
+                font-size: 30px;
+                padding: 16px 24px;
+            }
+            .result-title {
+                font-size: 48px;
+                padding: 24px 24px 40px 24px;
+            }
+            .icon-section {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+    <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <!-- Header -->
+        <div style="padding: 20px 24px 16px 24px; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <button onclick="window.history.back()"
+                    style="background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.1);
+                           border-radius: 12px; width: 110px; height: 110px;
+                           font-size: 45px; color: #334155; cursor: pointer;
+                           display: flex; align-items: center; justify-content: center;
+                           transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
+                    onmouseover="this.style.background='#ffffff'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';"
+                    onmouseout="this.style.background='rgba(255,255,255,0.9)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';">
+                &#8592;
+            </button>
+        </div>
+        <!-- Title -->
+        <!-- <div class="result-title" style="font-weight: 700; margin: 0; color: #1e293b; letter-spacing: -0.02em; line-height: 1.1; margin-left: 5vh">
+            Result
+        </div> -->
+        <!-- Content Card -->
+        <div class="container-shipment"
+             style="background: #ffffff; box-shadow: 0 8px 32px rgba(0,0,0,0.12); overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
+                    margin: 40px 5vh 32px 5vh;">
+            <!-- Icon Section -->
+            <div style="display: flex; justify-content: center; padding: 24px 0 16px 0;">
+                <div class="icon-section" style="background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+                           border-radius: 20px; display: flex; align-items: center; justify-content: center;
+                           box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3); position: relative;
+                           width: 200px; height: 80px;">
+                    <span style="color: #ffffff; font-size: 40px; font-family: Georgia, serif; font-weight: 500; position: relative;">Sender</span>
+                </div>
+            </div>
+            <!-- Sender Details -->
+            <div style="padding: 0 0 16px 0;">
+                <div class="sender-details" id="sender-text" style="color:#334155; background:#f8fafc; border-radius:12px; border:1px solid #e2e8f0; white-space:pre-line; margin-bottom:8px;">
+                    <t t-if="shipment_data">
+                        <t t-if="shipment_data.get('sender_name')"><t t-esc="shipment_data['sender_name']"/><br/></t>
+                        <t t-if="shipment_data.get('sender_address')"><t t-esc="shipment_data['sender_address']"/><br/></t>
+                        <t t-if="shipment_data.get('sender_city')"><t t-esc="shipment_data['sender_city']"/>, </t>
+                        <t t-if="shipment_data.get('sender_country')"><t t-esc="shipment_data['sender_country']"/></t><br/>
+                        <t t-if="shipment_data.get('sender_phone')">📞 <t t-esc="shipment_data['sender_phone']"/></t>
+                    </t>
+                </div>
+            </div>
+        </div>
+        <!-- Action Buttons -->
+        <div style="padding: 0 24px 24px 24px; margin: 0px 5vh 0px 5vh;">
+            <div style="display: flex;">
+                <button class="copy-btn"
+                        onclick="navigator.clipboard.writeText(document.getElementById('sender-text').innerText.trim())
+                                .then(() => {
+                                    this.innerHTML = '✅ Copied!';
+                                    this.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                                    setTimeout(() => {
+                                        this.innerHTML = '📋 Copy text';
+                                        this.style.background = 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)';
+                                    }, 2000);
+                                });"
+                        style="flex: 1; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                               border: 1px solid #e2e8f0; border-radius: 16px;
+                               font-weight: 600; color: #475569; cursor: pointer;
+                               transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    📋 Copy text
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="change_role_view_form" model="ir.ui.view">
+            <field name="name">change.role.view.form</field>
+            <field name="model">change.role</field>
+            <field name="arch" type="xml">
+                <form string="Change Role">
+                    <group>
+                        <field name="user_ids" widget="many2many_tags"/>
+                        <field name="user_role_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button string="Confirm" name="change_role" type="object" class="oe_highlight"/>
+                        <button string="Discard" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="change_role_action" model="ir.actions.act_window">
+            <field name="name">Change Role</field>
+            <field name="res_model">change.role</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

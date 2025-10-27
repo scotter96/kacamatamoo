@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions for Deposits -->
+    
+    <!-- All Deposits Action (backup) -->
+    <record id="action_thinq_deposit" model="ir.actions.act_window">
+        <field name="name">All Deposits</field>
+        <field name="res_model">thinq.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_thinq_deposit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first deposit!
+            </p>
+            <p>
+                Deposits allow you to manage advance payments from customers or to vendors.
+                You can then apply these deposits to invoices or bills to reduce outstanding amounts.
+            </p>
+        </field>
+    </record>
+
+    <!-- Customer Deposits Action -->
+    <record id="action_thinq_deposit_receive" model="ir.actions.act_window">
+        <field name="name">Customer Deposits</field>
+        <field name="res_model">thinq.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type', '=', 'receive')]</field>
+        <field name="context">{'default_type': 'receive'}</field>
+        <field name="search_view_id" ref="view_thinq_deposit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first customer deposit!
+            </p>
+            <p>
+                Customer deposits allow you to manage advance payments from customers.
+                You can then apply these deposits to customer invoices to reduce outstanding amounts.
+            </p>
+        </field>
+    </record>
+
+    <!-- Vendor Deposits Action -->
+    <record id="action_thinq_deposit_send" model="ir.actions.act_window">
+        <field name="name">Vendor Deposits</field>
+        <field name="res_model">thinq.deposit</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type', '=', 'send')]</field>
+        <field name="context">{'default_type': 'send'}</field>
+        <field name="search_view_id" ref="view_thinq_deposit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first vendor deposit!
+            </p>
+            <p>
+                Vendor deposits allow you to manage advance payments to vendors.
+                You can then apply these deposits to vendor bills to reduce outstanding amounts.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    
+    <!-- Customer Deposits under Customers menu -->
+    <menuitem id="menu_thinq_deposit_receive" 
+              name="Deposits" 
+              parent="account.menu_finance_receivables" 
+              action="action_thinq_deposit_receive" 
+              sequence="25"/>
+
+    <!-- Vendor Deposits under Vendors menu -->
+    <menuitem id="menu_thinq_deposit_send" 
+              name="Deposits" 
+              parent="account.menu_finance_payables" 
+              action="action_thinq_deposit_send" 
+              sequence="25"/>
+
+</odoo>

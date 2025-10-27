@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Form View -->
+        <record id="view_pos_order_refraction_form" model="ir.ui.view">
+            <field name="name">pos.order.refraction.form</field>
+            <field name="model">pos.order.refraction</field>
+            <field name="arch" type="xml">
+                <form string="Lens Prescription">
+                    <sheet>
+                        <group>
+                            <field name="product_id" readonly="1" force_save="1" />
+                            <field name="p_vitrum_spher" invisible="1" />
+                            <field name="p_vitrum_cylndr" invisible="1" />
+                            <field name="p_add" invisible="1" />
+                            <field name="name"/>
+                            <field name="frame_id" domain="[('id', 'in', context.get('frame_ids'))]" />
+                            <field name="frame_name" invisible="1" />
+                            <field name="frame_shape_id" />
+                            <field name="side"/>
+                            <field name="pos_order_id" readonly="1" force_save="1" />
+                        </group>
+
+                        <group string="Lens Parameters">
+                            <field name="vitrum_spher" readonly="p_add > 0 or p_vitrum_spher > 0 or p_vitrum_cylndr > 0" force_save="1" />
+                            <field name="vitrum_cylndr" readonly="p_add > 0 or p_vitrum_spher > 0 or p_vitrum_cylndr > 0" force_save="1" />
+                            <field name="axis"/>
+                            <field name="prima_basis"/>
+                            <field name="add" readonly="p_add > 0 or p_vitrum_spher > 0 or p_vitrum_cylndr > 0" force_save="1"/>
+                        </group>
+
+                        <group string="Additional Measurements">
+                            <field name="pd"/>
+                            <field name="erc"/>
+                            <field name="ocular_dominance"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_pos_order_refraction_list" model="ir.ui.view">
+            <field name="name">pos.order.refraction.list</field>
+            <field name="model">pos.order.refraction</field>
+            <field name="arch" type="xml">
+                <list string="Lens Prescriptions" editable="bottom" multi_edit="1" delete="1" create="0">
+                    <field name="product_id" />
+                    <field name="p_vitrum_spher" column_invisible="True" />
+                    <field name="p_vitrum_cylndr" column_invisible="True" />
+                    <field name="p_add" column_invisible="True" />
+                    <field name="name" column_invisible="True"/>
+                    <field name="frame_id" domain="[('id', 'in', context.get('frame_ids'))]" />
+                    <field name="frame_name" column_invisible="True" />
+                    <field name="frame_shape_id" />
+                    <field name="side"/>
+                    <field name="vitrum_spher" readonly="p_add > 0 or p_vitrum_spher > 0 or p_vitrum_cylndr > 0" force_save="1" />
+                    <field name="vitrum_cylndr" readonly="p_add > 0 or p_vitrum_spher > 0 or p_vitrum_cylndr > 0" force_save="1" />
+                    <field name="axis"/>
+                    <field name="prima_basis"/>
+                    <field name="add" readonly="p_add > 0 or p_vitrum_spher > 0 or p_vitrum_cylndr > 0" force_save="1"/>
+                    <field name="pd"/>
+                    <field name="erc"/>
+                    <field name="ocular_dominance"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_pos_order_refraction">
+            <field name="name">Refraction</field>
+            <field name="res_model">pos.order.refraction</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Refraction
+              </p><p>
+                Please add refraction data.
+              </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_add_refraction">
+            <field name="name">Refraction</field>
+            <field name="res_model">pos.order.refraction</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context" eval="{'dialog_size': 'extra-large'}"/>
+            <field name="view_id" ref="view_pos_order_refraction_form"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_add_refraction_tree">
+            <field name="name">Refraction</field>
+            <field name="res_model">pos.order.refraction</field>
+            <field name="view_mode">list</field>
+            <field name="target">new</field>
+            <field name="context" eval="{'dialog_size': 'extra-large'}"/>
+            <field name="domain">[('id', 'in', context.get('active_ids'))]</field>
+            <field name="view_id" ref="view_pos_order_refraction_list"/>
+        </record>
+
+        <!-- REFRACTION POS ORDER -->
+        <record id="pos_order_refraction_view_form" model="ir.ui.view">
+            <field name="name">pos.order.refraction.view.form</field>
+            <field name="model">pos.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <div class="alert alert-danger" role="alert" style="font-style: italic;">
+                                <i class="fa fa-exclamation-triangle me-2 mt-1" aria-hidden="true"></i>
+                                Pastikan Anda mengisi data <b>Refraction</b> dengan lengkap, akurat, dan sesuai hasil pemeriksaan.
+                                Isilah setiap kolom <b>(Frame, Side, Sphere, Cylinder, Axis, Prima Basis, Add, PD, Eye Rotation Center, dan Ocular Dominance)</b> dengan nilai yang benar agar hasil resep dan pembuatan lensa tidak mengalami kesalahan.
+                                Periksa kembali sebelum menyimpan untuk memastikan tidak ada kolom yang kosong atau tertukar antara <b>Left</b> dan <b>Right</b>.
+                            </div>
+                        </group>
+                        <notebook>
+                            <page name="refraction" string="Detail">
+                                <field name="refraction_line_ids">
+                                    <list editable="bottom" multi_edit="1" create="0" delete="0">
+                                        <field name="product_id" />
+                                        <field name="p_vitrum_spher" column_invisible="True" />
+                                        <field name="p_vitrum_cylndr" column_invisible="True" />
+                                        <field name="p_add" column_invisible="True" />
+                                        <field name="name" column_invisible="True"/>
+                                        <field name="frame_id" required="context.get('frame_ids')" domain="[('id', 'in', context.get('frame_ids'))]" />
+                                        <field name="frame_name" column_invisible="True" />
+                                        <field name="frame_shape_id" column_invisible="True"/>
+                                        <field name="side" required="1"/>
+                                        <field name="vitrum_spher" readonly="p_add or p_vitrum_spher or p_vitrum_cylndr" force_save="1" />
+                                        <field name="vitrum_cylndr" readonly="p_add or p_vitrum_spher or p_vitrum_cylndr" force_save="1" />
+                                        <field name="axis"/>
+                                        <field name="prima_basis"/>
+                                        <field name="add" readonly="p_add or p_vitrum_spher or p_vitrum_cylndr" force_save="1"/>
+                                        <field name="pd"/>
+                                        <field name="erc" required="1"/>
+                                        <field name="ocular_dominance" required="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_order_refraction_action" model="ir.actions.act_window">
+            <field name="name">Refraction</field>
+            <field name="res_model">pos.order</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context" eval="{'dialog_size': 'extra-large'}"/>
+            <field name="view_id" ref="pos_order_refraction_view_form"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <!-- Paperformat untuk Custom Grid 107 - Multiple Labels per Page -->
+        <record id="paperformat_asset_label_custom_107" model="report.paperformat">
+            <field name="name">Asset Label Custom Grid 107</field>
+            <field name="format">custom</field>
+            <field name="page_height">120</field> 
+            <field name="page_width">205</field> 
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- Paperformat untuk Custom Grid 109 - Multiple Labels per Page -->
+        <record id="paperformat_asset_label_custom_109" model="report.paperformat">
+            <field name="name">Asset Label 109 (13x38mm)</field>
+            <field name="format">custom</field>
+            <field name="page_height">90</field>
+            <field name="page_width">158</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- Action Report untuk Custom Grid 107 -->
+        <record id="action_report_asset_label_custom_107" model="ir.actions.report">
+            <field name="name">Asset Label 107 (18x50mm)</field>
+            <field name="model">account.asset</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">thinq_asset.report_asset_label_custom_107</field>
+            <field name="report_file">thinq_asset.report_asset_label_custom_107</field>
+            <field name="paperformat_id" ref="thinq_asset.paperformat_asset_label_custom_107"/>
+        </record>
+
+        <!-- Action Report untuk Custom Grid 109 -->
+        <record id="action_report_asset_label_custom_109" model="ir.actions.report">
+            <field name="name">Asset Label Custom Grid 109</field>
+            <field name="model">account.asset</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">thinq_asset.report_asset_label_custom_109</field>
+            <field name="report_file">thinq_asset.report_asset_label_custom_109</field>
+            <field name="paperformat_id" ref="thinq_asset.paperformat_asset_label_custom_109"/>
+        </record>
+    </data>
+</odoo>

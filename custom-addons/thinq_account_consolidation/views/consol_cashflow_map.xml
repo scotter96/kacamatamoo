@@ -1,0 +1,45 @@
+<!-- thinq_account_consolidation/views/cashflow_map_views.xml -->
+<odoo>
+  <record id="view_consolidation_cf_map_list" model="ir.ui.view">
+    <field name="name">consolidation.cashflow.map.list</field>
+    <field name="model">consolidation.cashflow.map</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="section"/>
+        <field name="account_id"/>
+        <field name="tag_id"/>
+        <field name="sign"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_consolidation_cf_map_form" model="ir.ui.view">
+    <field name="name">consolidation.cashflow.map.form</field>
+    <field name="model">consolidation.cashflow.map</field>
+    <field name="arch" type="xml">
+      <form string="Cash Flow Mapping">
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="section"/>
+            <field name="sign"/>
+          </group>
+          <group>
+            <field name="account_id"/>
+            <field name="tag_id"/>
+          </group>
+          <field name="description_use" readonly="1"/>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_consolidation_cf_map" model="ir.actions.act_window">
+    <field name="name">Cash Flow Mapping</field>
+    <field name="res_model">consolidation.cashflow.map</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+ 
+</odoo>

@@ -1,0 +1,57 @@
+<!-- thinq_account_consolidation/views/elimination_entries_views.xml -->
+<odoo>
+  <record id="view_consolidation_elimination_entry_list" model="ir.ui.view">
+    <field name="name">consolidation.elimination.entry.list</field>
+    <field name="model">consolidation.elimination.entry</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="date"/>
+        <field name="company_id"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_consolidation_elimination_entry_form" model="ir.ui.view">
+    <field name="name">consolidation.elimination.entry.form</field>
+    <field name="model">consolidation.elimination.entry</field>
+    <field name="arch" type="xml">
+      <form string="Eliminating Entry">
+        <header>
+          <button name="action_post" type="object" string="Post" invisible="state != 'draft'" class="btn-primary"/>
+          <button name="action_reset_to_draft" type="object" string="Reset to Draft" invisible="state not in  ['posted','cancel']"/>
+          <button name="action_cancel" type="object" string="Cancel" invisible="state not in  ['draft','posted']" class="btn-secondary"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="date"/>
+            <field name="company_id"/>
+          </group>
+          <notebook>
+            <page string="Lines">
+              <field name="line_ids" context="{'default_company_id': company_id}">
+                <list editable="bottom">
+                  <field name="name"/>
+                  <field name="account_id"/>
+                  <field name="debit"/>
+                  <field name="credit"/>
+                  <field name="balance" readonly="1"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_consolidation_elimination_entries" model="ir.actions.act_window">
+    <field name="name">Eliminating Entries</field>
+    <field name="res_model">consolidation.elimination.entry</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

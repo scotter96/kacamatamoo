@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_pack_public_user,product.bundle.public.user,model_product_pack,,1,0,0,0
+access_product_pack_manager,product.bundle.manager,model_product_pack,sales_team.group_sale_salesman_all_leads,1,1,1,1
+access_bundle_pack_product_product_public,product_bundle_all.product.product.public,product.model_product_product,base.group_public,1,0,0,0
+access_product_template_odoo_public,odoo_product_template_access,product.model_product_template,,1,1,1,1
+access_product_product_employee,product.product employee,model_product_product,base.group_user,1,1,1,1

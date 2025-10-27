@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <record id="pivot_purchase_report_supplier_performance" model="ir.ui.view">
+    <field name="name">Supplier Performance Report</field>
+    <field name="model">purchase.report</field>
+    <field name="priority">64</field>
+    <field name="arch" type="xml">
+      <pivot string="Supplier Performance">
+        <field name="partner_id" type="row" string="Supplier"/>
+        <field name="order_id" type="row" string="No PO"/>
+        <field name="qty_ordered" type="measure" string="Qty Ordered"/>
+        <field name="qty_received" type="measure" string="Qty Received"/>
+        <field name="qty_scrapped" type="measure" string="Qty Scrap"/>
+        <field name="fulfillment_percentage" type="measure" string="% Fulfillment"/>
+        <field name="qc_passed_percentage" type="measure" string="%QC Passed"/>
+      </pivot>
+    </field>
+  </record>
+</odoo>

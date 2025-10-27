@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Product Template Form View -->
+    <record id="view_template_property_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.thinq</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group string="Product Type">
+                    <field name="is_frame"/>
+                    <field name="is_lens"/>
+                </group>
+                <group string="Supplier Information">
+                    <field name="supplier_sku"/>
+                </group>
+
+                <!-- Frame-specific fields -->
+                <separator string="Frame Specifications" invisible="not is_frame"/>
+                <group invisible="not is_frame">
+                    <group string="Material and Color">
+                        <field name="material_id"/>
+                        <field name="color_id"/>
+                        <field name="frame_shape_id"/>
+                    </group>
+                    <group string="Dimensions">
+                        <field name="rim_size"/>
+                        <field name="bridge_size"/>
+                        <field name="temple_size"/>
+                        <field name="weight"/>
+                    </group>
+                </group>
+                
+                <!-- Lens-specific fields (internal only) -->
+                <separator string="Lens Specifications (Internal)" invisible="not is_lens" groups="base.group_system"/>
+                <group invisible="not is_lens" groups="base.group_system">
+                    <group>
+                        <field name="is_plano"/>
+                    </group>
+                    <group>
+                        <!-- Vitrum fields - readonly jika is_plano = True -->
+                        <field name="vitrum_spher" readonly="is_plano"/>
+                        <field name="vitrum_cylndr" readonly="is_plano"/>
+                        <field name="add" readonly="is_plano"/>
+                    </group>
+                </group>
+
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Product Template List View to reorder fields -->
+    <record id="product_template_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.tree.inherit.thinq</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <!-- Move default_code to the first position -->
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="default_code" string="SKU" optional="show"/>
+            </xpath>
+            <!-- Remove the original default_code field if it exists -->
+            <xpath expr="//field[@name='default_code'][position()>1]" position="replace"/>
+        </field>
+    </record>
+
+    <record id="product_product_stock_tree" model="ir.ui.view">
+        <field name="name">product.product.view.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <field name="free_qty" position="attributes">
+                <attribute name="string">Unreserved</attribute>
+            </field>
+            <field name="free_qty" position="after">
+                <field name="reserved_quantity" string="Reserved Stock" optional="show"/>
+            </field>
+            <field name="uom_id" position="after">
+                <field name="company_id" optional="hide"/>
+                <field name="entity_id" string="Entity" optional="show"/>
+                <field name="branch_id" string="Branch" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_product_tree_inherit" model="ir.ui.view">
+        <field name="name">product.product.view.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.view_stock_product_tree"/>
+        <field name="arch" type="xml">
+            <field name="virtual_available" position="after">
+                <field name="free_qty" string="Unreserved Stock" optional="show"/>
+                <field name="reserved_quantity" string="Reserved Stock" optional="show"/>
+            </field>
+            <field name="uom_id" position="after">
+                <field name="company_id" optional="hide"/>
+                <field name="entity_id" string="Entity" optional="show"/>
+                <field name="branch_id" string="Branch" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

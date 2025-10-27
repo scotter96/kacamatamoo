@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- Customer Menu Group -->
+        <menuitem
+            id="customer_menu"
+            name="Customer"
+            parent="contacts.menu_contacts"
+            sequence="15"/>
+            
+        <!-- Customer submenu -->
+        <menuitem
+            id="customer_all_menu"
+            name="Customer"
+            action="thinq_base.customer_action"
+            parent="customer_menu"
+            sequence="1"/>
+            
+        <!-- Customer Store submenu -->
+        <menuitem
+            id="customer_store_menu"
+            name="Customer Store"
+            action="thinq_base.customer_store_action"
+            parent="customer_menu"
+            sequence="2"/>
+            
+        <!-- Customer B2B submenu -->
+        <menuitem
+            id="customer_b2b_menu"
+            name="Customer B2B"
+            action="thinq_base.customer_b2b_action"
+            parent="customer_menu"
+            sequence="3"/>
+            
+        <!-- Vendor Menu -->
+        <menuitem
+            id="vendor_menu"
+            name="Vendor"
+            action="thinq_base.vendor_action"
+            parent="contacts.menu_contacts"
+            sequence="16"/>
+
+        <!-- Employee Menu Item -->
+        <menuitem id="menu_employee"
+            name="Employee"
+            action="employee_action"
+            parent="contacts.menu_contacts"
+            sequence="17"/>
+
+        <!-- City Menu -->
+        <menuitem
+            id="res_city_menu"
+            name="City"
+            action="thinq_base.res_city_action"
+            parent="contacts.menu_localisation"
+            sequence="3"/>
+    
+    </data>
+    
+
+</odoo>

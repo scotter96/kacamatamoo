@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_pos_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs.sudo()" t-as="o">
+                <t t-call="web.basic_layout">
+                    <table class="header-table" width="100%" border="0" style="border: 0; border-color: white;">
+                        <tr style="border: 0;">
+                            <td width="48%" style="border: 0; padding: 0.3rem;">
+                                <div class="company-title">
+                                    <h4>Kacamatamoo</h4>
+                                    <h4>Sale - Receipt</h4>
+                                </div>
+                                <div class="store-address">
+                                    <b>Store <span t-field="o.config_id.name"/></b><br/>
+                                    <t t-if="o.config_id.street">
+                                        <span t-field="o.config_id.street"/><br/>
+                                    </t>
+                                    <t t-if="o.config_id.street2">
+                                        <span t-field="o.config_id.street2"/><br/>
+                                    </t>
+                                    <t t-if="o.config_id.city_id or o.config_id.state_id or o.config_id.zip">
+                                        <span>
+                                            <t t-if="o.config_id.city_id">
+                                                <span t-field="o.config_id.city_id.name"/>
+                                            </t>
+                                            <t t-if="o.config_id.state_id">
+                                                <t t-if="o.config_id.city_id">, </t>
+                                                <span t-field="o.config_id.state_id.name"/>
+                                            </t>
+                                            <t t-if="o.config_id.zip">
+                                                <t t-if="o.config_id.city_id or o.config_id.state_id">, </t>
+                                                <span t-field="o.config_id.zip"/>
+                                            </t>
+                                        </span><br/>
+                                    </t>
+                                    <t t-if="o.config_id.country_id">
+                                        <span t-field="o.config_id.country_id.name"/><br/>
+                                    </t>
+                                    <t t-if="o.config_id.phone">
+                                        <span t-field="o.config_id.phone"/>
+                                    </t>
+                                </div>
+                                <p></p>
+                                <div>
+                                    <b>To:</b>
+                                </div>
+                                <div class="customer-info">
+                                    <b><span t-field="o.partner_id.name" /></b><br/>
+                                    <t t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/><br/>
+                                    </t>
+                                    <t t-if="o.partner_id.street2">
+                                        <span t-field="o.partner_id.street2"/><br/>
+                                    </t>
+                                    <span>
+                                        <t t-if="o.partner_id.city_id">
+                                            <span t-field="o.partner_id.city_id.name"/>
+                                        </t>
+                                        <t t-if="o.partner_id.state_id">
+                                            <t t-if="o.partner_id.city_id">, </t>
+                                            <span t-field="o.partner_id.state_id.name"/>
+                                        </t>
+                                        <t t-if="o.partner_id.zip">
+                                            <t t-if="o.partner_id.city_id or o.partner_id.state_id">, </t>
+                                            <span t-field="o.partner_id.zip"/>
+                                        </t>
+                                    </span><br/>
+                                    <t t-if="o.partner_id.country_id">
+                                        <span t-field="o.partner_id.country_id.name"/><br/>
+                                    </t>
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-field="o.partner_id.phone"/>
+                                    </t>
+                                </div>
+                            </td>
+                            <td width="4%" style="border: 0;">
+                            </td>
+                            <td width="48%" style="border: 0; padding: 0.3rem;">
+                                <div class="company-address" style="text-align: right;">
+                                    <b><span t-field="o.company_id.name" /></b><br />
+                                    <span t-field="o.company_id.street" /><br />
+                                    <span>NPWP: <span t-field="o.company_id.vat" /></span>
+                                </div>
+                                <p></p><p></p>
+                                <div class="invoice-info">
+                                    <table width="100%" border="1">
+                                        <tr>
+                                            <th style="text-align: left; padding: 0.3rem; font-weight: bold;">Invoice Info:</th>
+                                            <td style="padding: 0.3rem;">
+                                                <t t-set="th" t-value="o.date_order.strftime('%y') if o.date_order else ''"/>
+                                                <t t-set="bln" t-value="o.date_order.strftime('%m') if o.date_order else ''"/>
+                                                <span>
+                                                    OSL/<t t-esc="o.config_id.pos_code"/>/<t t-esc="th"/><t t-esc="bln"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: left; padding: 0.3rem; font-weight: bold;">Date:</th>
+                                            <td style="padding: 0.3rem;"><span t-field="o.date_order" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: left; padding: 0.3rem; font-weight: bold;">Store:</th>
+                                            <td style="padding: 0.3rem;"><span t-field="o.config_id.name" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: left; padding: 0.3rem; font-weight: bold;">Salesperson:</th>
+                                            <td style="padding: 0.3rem;"><span t-field="o.user_id.name" /></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align: left; padding: 0.3rem; font-weight: bold;">Notes:</th>
+                                            <td style="padding: 0.3rem;"><span t-field="o.general_note" /></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p></p><p></p>
+
+                    <div style="padding: 0.3rem;">
+                        <table class="invoice-lines" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: bold;">No</th>
+                                    <th style="font-weight: bold;">Product</th>
+                                    <th style="font-weight: bold;">Qty</th>
+                                    <th style="font-weight: bold;">Price / Unit</th>
+                                    <th style="font-weight: bold;">Discount %</th>
+                                    <th style="font-weight: bold;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="number" t-value="1" />
+                                <tr t-foreach="o.lines" t-as="line">
+                                    <td style="padding: 0.3rem;"><t t-esc="number" /></td>
+                                    <td style="padding: 0.3rem;">
+                                        <span t-field="line.product_id.name" />
+                                        <!-- Tampilkan detail pack jika is_pack = True -->
+                                            <t t-if="line.product_id.is_pack">
+                                                <br/>
+                                                <t t-foreach="line.product_id.pack_ids" t-as="pack_line">
+                                                    <span style="font-size: 0.8em; color: #555;">
+                                                        <span t-field="pack_line.product_id.name"/> 
+                                                        <t t-if="pack_line.qty_uom != 1">
+                                                            x<span t-field="pack_line.qty_uom"/>
+                                                        </t>
+                                                    </span><br/>
+                                                </t>
+                                            </t>
+                                    </td>
+                                    <td style="padding: 0.3rem; text-align: center;">
+                                        <span t-field="line.qty" />
+                                    </td>
+                                    <td style="padding: 0.3rem; text-align: right;">
+                                        <t t-esc="o.format_currency(line.price_unit)" />
+                                    </td>
+                                    <td style="padding: 0.3rem; text-align: right;">
+                                        <span t-field="line.discount" />%
+                                    </td>
+                                    <td style="padding: 0.3rem; text-align: right;">
+                                        <t t-esc="o.format_currency(line.price_subtotal_incl)" />
+                                    </td>
+                                    <t t-set="number" t-value="number + 1" />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p></p>
+
+                    <table class="invoice-total" width="100%" border="0" style="border: 0; border-color: white;">
+                        <tr style="border: 0;">
+                            <td width="70%" style="border: 0;"></td>
+                            <td width="30%" style="border: 0; padding: 0.3rem;">
+                                <table width="100%">
+                                    <tr>
+                                        <td style="padding: 0.3rem; font-weight: bold;">Total</td>
+                                        <td style="padding: 0.3rem; text-align: right;"><t t-esc="o.format_currency(o.amount_total - o.amount_tax)" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.3rem; font-weight: bold;">Inc Tax</td>
+                                        <td style="padding: 0.3rem; text-align: right;"><t t-esc="o.format_currency(o.amount_tax)" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.3rem; font-weight: bold;">To Pay</td>
+                                        <td style="padding: 0.3rem; text-align: right;"><t t-esc="o.format_currency(o.amount_total)" /></td>
+                                    </tr>
+                                    <tr t-foreach="o.payment_ids" t-as="payment">
+                                        <t t-if="payment.amount > 0">
+                                            <td style="padding: 0.3rem; font-weight: bold;"><span t-field="payment.payment_method_id.name" /></td>
+                                            <td style="padding: 0.3rem; text-align: right;"><t t-esc="o.format_currency(payment.amount)" /></td>
+                                        </t>
+                                        <t t-else="">
+                                            <td style="padding: 0.3rem; font-weight: bold;">CHANGE</td>
+                                            <td style="padding: 0.3rem; text-align: right;"><t t-esc="o.format_currency(-1 * payment.amount)" /></td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p></p><p></p>
+
+                    <table width="100%" style="border: 0; border-color: white;">
+                        <tr>
+                            <td style="padding: 0.3rem; border: 0;" t-if="o.refraction_line_ids">
+                                Refraction
+                            </td>
+                            <td style="padding: 0.3rem; border: 0; width: 50%; text-align: right;">
+                                <b>Delivery Date:</b> _________________________
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" border="1" t-if="o.refraction_line_ids.sudo()">
+                        <thead>
+                            <tr>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Lens Name
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Side
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Frame Name
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Vitrum Spher
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Vitrum Cylndr
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Axis
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Prisma Basis
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Add
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    PD
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Eye Rotation Center (ERC)
+                                </td>
+                                <td style="padding: 0.3rem;  font-weight: bold; text-align: center;">
+                                    Ocular Dominance (OD)
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.refraction_line_ids.sudo()" t-as="ref">
+                                <td style="padding: 0.3rem;"><span t-field="ref.name" /></td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.side" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.frame_name" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.vitrum_spher" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.vitrum_cylndr" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.axis" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.prima_basis" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.add" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.pd" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.erc" />
+                                </td>
+                                <td style="padding: 0.3rem;">
+                                    <span t-field="ref.ocular_dominance" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p></p>
+                    <p>Thank You</p>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

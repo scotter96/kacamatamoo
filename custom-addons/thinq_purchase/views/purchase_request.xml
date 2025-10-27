@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="purchase_request_view_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.request.view.form.inherit</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </field>
+                <xpath expr="//field[@name='line_ids']/list/field[@name='estimated_cost']" position="before">
+                    <field name="price_unit"/>
+                </xpath>
+                <field name="date_start" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </field>
+                <field name="date_start" position="after">
+                    <field name="date_planned" readonly="not is_editable"/>
+                </field>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

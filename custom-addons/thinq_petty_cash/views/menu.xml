@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <menuitem
+            id="petty_cash_menu"
+            name="Petty Cash"
+            groups="thinq_petty_cash.group_petty_cash_user"
+            web_icon="account,static/description/icon.png"
+            sequence="100"
+            action="petty_cash_action"/>
+
+        <!-- <menuitem
+            id="replenish_petty_cash_sub_menu"
+            name="Usage"
+            action="usage_petty_cash_action"
+            groups="thinq_petty_cash.group_petty_cash_user"
+            parent="petty_cash_menu"
+            sequence="10"/>
+
+        <menuitem
+            id="usage_petty_cash_sub_menu"
+            name="Replenish"
+            action="replenish_petty_cash_action"
+            groups="thinq_petty_cash.group_petty_cash_user"
+            parent="petty_cash_menu"
+            sequence="20"/> -->
+    
+    </data>
+    
+
+</odoo>

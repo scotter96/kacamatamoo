@@ -1,0 +1,60 @@
+<!-- thinq_account_consolidation/views/consolidated_report_result_views.xml -->
+<odoo>
+  <!-- LIST (v18 boleh pakai <list>) -->
+  <record id="view_consolidated_report_result_list" model="ir.ui.view">
+    <field name="name">consolidated.report.result.list</field>
+    <field name="model">consolidated.report.result</field>
+    <field name="arch" type="xml">
+      <list create="false" edit="false" delete="false">
+        <field name="wizard_id" invisible="1"/>
+        <field name="title" invisible="1"/>
+        <field name="statement"/>
+        <field name="section"/>
+        <field name="company_id"/>
+        <field name="account_code"/>
+        <field name="account_name"/>
+        <field name="amount" sum="Total"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- PIVOT (Odoo 18: gunakan <field type="measure"/> bukan measures="") -->
+  <record id="view_consolidated_report_result_pivot" model="ir.ui.view">
+    <field name="name">consolidated.report.result.pivot</field>
+    <field name="model">consolidated.report.result</field>
+    <field name="arch" type="xml">
+      <pivot string="Consolidated Report" disable_linking="1">
+        <!-- deklarasi measure -->
+        <field name="amount" type="measure" operator="sum"/>
+
+        <!-- axis -->
+        <field name="statement" type="col"/>
+        <field name="section" type="row"/>
+        <field name="company_id" type="row"/>
+        <field name="account_code" type="row"/>
+      </pivot>
+    </field>
+  </record>
+
+  <!-- GRAPH (pastikan measure dideklarasikan di dalam) -->
+  <record id="view_consolidated_report_result_graph" model="ir.ui.view">
+    <field name="name">consolidated.report.result.graph</field>
+    <field name="model">consolidated.report.result</field>
+    <field name="arch" type="xml">
+      <graph string="Consolidated Report" type="bar" stacked="true">
+        <field name="amount" type="measure" operator="sum"/>
+        <field name="section" type="row"/>
+        <field name="company_id" type="col"/>
+      </graph>
+    </field>
+  </record>
+
+  <!-- (opsional) action untuk membuka result (kalau belum ada) -->
+  <record id="action_consolidated_report_result" model="ir.actions.act_window">
+    <field name="name">Consolidated Report</field>
+    <field name="res_model">consolidated.report.result</field>
+    <field name="view_mode">pivot,list,graph</field>
+    <field name="context">{}</field>
+    <field name="target">current</field>
+  </record>
+</odoo>

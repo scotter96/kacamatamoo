@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+          <menuitem
+            name="Consolidation"
+            parent="account.menu_finance_entries"
+            id="menu_consolidation"/>
+
+          <menuitem id="menu_consolidation_root" name="Consolidation"
+            parent="menu_consolidation"
+            groups="account.group_account_user"/>
+
+          <menuitem id="menu_consolidated_coa"
+            name="Consolidated COA"
+            parent="menu_consolidation_root"
+            action="action_consolidated_coa"
+            groups="account.group_account_user"/>
+       
+          <menuitem
+              id="menu_consolidated_links"
+              name="Consolidated Links"
+              action="action_consolidation_links"
+              parent="menu_consolidation_root"
+              sequence="10"/>
+          
+          <menuitem id="menu_consolidation_elimination_rules"
+            name="Elimination Rules"
+            parent="menu_consolidation_root"
+            action="action_consolidation_elimination_rules"
+            sequence="20"/>
+
+          <menuitem id="menu_consolidation_eliminations" name="Eliminating Entries" parent="menu_consolidation_root"
+            action="action_consolidation_elimination_entries"/>
+
+          <menuitem id="menu_consolidation_cf_map" name="Cash Flow Mapping"
+            parent="menu_consolidation_root" action="action_consolidation_cf_map"/>
+
+          <menuitem
+              id="menu_consolidated_report"
+              name="Generate Consolidated Report"
+              action="action_consolidated_report_wizard"
+              parent="menu_consolidation_root"
+              sequence="11"/>
+
+</odoo>

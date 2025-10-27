@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Wizard Apply Deposit Form -->
+    <record id="view_thinq_deposit_apply_wizard_form" model="ir.ui.view">
+        <field name="name">thinq.deposit.apply.wizard.form</field>
+        <field name="model">thinq.deposit.apply.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Apply Deposit">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="move_id" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="move_type" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="amount_residual" readonly="1"/>
+                            <field name="total_apply_amount" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Available Deposits">
+                        <field name="deposit_line_ids" nolabel="1">
+                            <list editable="bottom">
+                                <field name="deposit_name" readonly="1"/>
+                                <field name="deposit_date" readonly="1"/>
+                                <field name="deposit_currency_id" readonly="1"/>
+                                <field name="available_amount" readonly="1"/>
+                                <field name="apply_amount"/>
+                                <field name="wizard_currency_id" invisible="1"/>
+                                <field name="deposit_id" invisible="1"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Apply Deposits" name="action_apply_deposits" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

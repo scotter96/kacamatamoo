@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+
+        <!-- <xpath expr="(//OrderlineNoteButton)[1]" position="after">
+            <RefractionButton />
+            <ReturnButton />
+        </xpath> -->
+
+        <xpath expr="(//OrderlineNoteButton)[3]" position="after">
+            <RefractionButton class="buttonClass"/>
+            <!-- <ReturnButton class="buttonClass"/> -->
+        </xpath>
+    </t>
+
+</templates>

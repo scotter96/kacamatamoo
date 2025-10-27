@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_order_form_inherit_thinq_sale" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.thinq_sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='country_code']" position="before">
+                    
+                    <field name="is_price_different"
+                           readonly="1"
+                           widget="boolean_button"
+                           options="{'color': 'warning'}"/>
+
+                    <field name="confirm_price_approved"
+                           string="Approve Price Different"
+                           invisible="not is_price_different"
+                           readonly="state != 'draft'"
+                           groups="thinq_sale.group_approve_price_different"/>
+
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="before">
+                    <button name="action_request_price_approval"
+                            type="object"
+                            string="Request Approval"
+                            class="btn-secondary"
+                            invisible="not is_price_different or confirm_price_approved"
+                            help="Send approval request to Finance team"/>
+                </xpath>
+
+                <field name="pricelist_id" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+
+                <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
+                    <field name="free_qty_today" string="Available Quantity" column_invisible="parent.state not in ('draft','sent')"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

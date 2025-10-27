@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="thinq_pos_loyalty_program_view_form" model="ir.ui.view">
+        <field name="name">thinq_pos.loyalty.program.view.form</field>
+        <field name="model">loyalty.program</field>
+        <field name="inherit_id" ref="loyalty.loyalty_program_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='date_to']" position="after">
+                <field name="check_partner_birthday" />
+                <field name="total_order_count" invisible="program_type in ('gift_card', 'ewallet')" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit Loyalty Program Form View -->
+        <record id="view_loyalty_program_form_inherit" model="ir.ui.view">
+            <field name="name">loyalty.program.form.inherit.thinq</field>
+            <field name="model">loyalty.program</field>
+            <field name="inherit_id" ref="loyalty.loyalty_program_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Promotion Class setelah pricelist -->
+                 <xpath expr="//field[@name='pricelist_ids']" position="after">
+                    <field name="promotion_class_id" 
+                           options="{'no_create': False}" 
+                           required="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Loyalty Program tree View -->
+        <record id="view_loyalty_program_tree_inherit" model="ir.ui.view">
+            <field name="name">loyalty.program.tree.inherit.thinq</field>
+            <field name="model">loyalty.program</field>
+            <field name="inherit_id" ref="loyalty.loyalty_program_view_tree"/>
+            <field name="arch" type="xml">
+                <!-- Promotion Class di tree view -->
+                <xpath expr="//field[@name='program_type']" position="after">
+                    <field name="promotion_class_id" optional="show"/>
+                </xpath>
+
+                <xpath expr="//field[@name='program_type']" position="after">
+                    <field name="total_order_count" />
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

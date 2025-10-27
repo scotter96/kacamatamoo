@@ -1,0 +1,109 @@
+<!-- thinq_account_consolidation/views/consolidation_elimination_rule_views.xml -->
+<odoo>
+
+  <!-- ========== SEARCH VIEW ========== -->
+  <record id="view_consolidation_elimination_rule_search" model="ir.ui.view">
+    <field name="name">consolidation.elimination.rule.search</field>
+    <field name="model">consolidation.elimination.rule</field>
+    <field name="arch" type="xml">
+      <search string="Elimination Rules">
+        <field name="name"/>
+        <field name="parent_company_id"/>
+        <filter string="Active" name="filter_active" domain="[('active','=',True)]" help="Active rules"/>
+        <filter string="Inactive" name="filter_inactive" domain="[('active','=',False)]" help="Inactive rules"/>
+        <separator/>
+        <filter string="Intercompany AR/AP" name="rt_ic_arap" domain="[('rule_type','=','intercompany_arap')]"/>
+        <filter string="Revenue/COGS" name="rt_rev_cogs" domain="[('rule_type','=','intercompany_rev_cogs')]"/>
+        <filter string="Loans" name="rt_loans" domain="[('rule_type','=','intercompany_loans')]"/>
+        <filter string="Dividend" name="rt_dividend" domain="[('rule_type','=','dividend')]"/>
+        <filter string="Inventory UP" name="rt_inventory_up" domain="[('rule_type','=','inventory_up')]"/>
+        <separator/>
+        <group expand="0" string="Group By">
+          <filter string="Parent Company" name="grp_parent_company" context="{'group_by':'parent_company_id'}"/>
+          <filter string="Rule Type" name="grp_rule_type" context="{'group_by':'rule_type'}"/>
+          <filter string="Active" name="grp_active" context="{'group_by':'active'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <!-- ========== list (LIST) VIEW ========== -->
+  <record id="view_consolidation_elimination_rule_list" model="ir.ui.view">
+    <field name="name">consolidation.elimination.rule.list</field>
+    <field name="model">consolidation.elimination.rule</field>
+    <field name="arch" type="xml">
+      <list string="Elimination Rules">
+        <field name="name"/>
+        <field name="rule_type"/>
+        <field name="parent_company_id"/>
+        <field name="use_partner_map"/>
+        <field name="account_ic_ar" optional="show"/>
+        <field name="account_ic_ap" optional="show"/>
+        <field name="account_ic_rev" optional="hide"/>
+        <field name="account_ic_cogs" optional="hide"/>
+        <field name="active"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ========== FORM VIEW ========== -->
+  <record id="view_consolidation_elimination_rule_form" model="ir.ui.view">
+    <field name="name">consolidation.elimination.rule.form</field>
+    <field name="model">consolidation.elimination.rule</field>
+    <field name="arch" type="xml">
+      <form string="Elimination Rule">
+        <sheet>
+          <header>
+            <field name="active" widget="boolean_toggle"/>
+          </header>
+
+          <div class="oe_title">
+            <label for="name"/>
+            <h1><field name="name" placeholder="Rule name"/></h1>
+          </div>
+
+          <group>
+            <group>
+              <field name="parent_company_id" required="1"/>
+              <field name="rule_type" required="1"/>
+              <field name="use_partner_map"/>
+            </group>
+            <group string="Contra Accounts (Parent)">
+              <!-- Tampilkan/require sesuai rule_type -->
+              <field name="account_ic_ar" invisible="rule_type != 'intercompany_arap'"/>
+              <field name="account_ic_ap" invisible="rule_type != 'intercompany_arap'"/>
+
+              <field name="account_ic_rev" invisible="rule_type != 'intercompany_arap'"/>
+              <field name="account_ic_cogs" invisible="rule_type != 'intercompany_arap'"/>
+            </group>
+          </group>
+
+          <group>
+            <field name="note" placeholder="Notes or guidance for this rule..." nolabel="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- ========== ACTION ========== -->
+  <record id="action_consolidation_elimination_rules" model="ir.actions.act_window">
+    <field name="name">Elimination Rules</field>
+    <field name="res_model">consolidation.elimination.rule</field>
+    <field name="view_mode">list,form</field>
+    <field name="search_view_id" ref="view_consolidation_elimination_rule_search"/>
+    <!-- Batasi ke manager (opsional): uncomment jika sudah punya group
+    <field name="groups_id" eval="[(4, ref('thinq_account_consolidation.group_consolidation_manager'))]"/>
+    -->
+    <field name="context">{}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create your first elimination rule
+      </p>
+      <p>
+        Define how intercompany balances and other consolidation adjustments are eliminated.
+      </p>
+    </field>
+  </record>
+
+</odoo>

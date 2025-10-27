@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="button_validate" position="before">
+                <button string="Set to Packing" name="set_packing" type="object" class="oe_highlight" invisible="state != 'assigned' or picking_or_packing != 'picking' or picking_type_code not in ('incoming','outgoing')"/>
+                <button string="Back to Picking" name="set_picking" type="object" invisible="state != 'assigned' or picking_or_packing != 'packing' or picking_type_code not in ('incoming','outgoing')"/>
+                <button string="Assign Box" name="action_box" type="object" class="oe_highlight" invisible="state != 'assigned' or picking_or_packing != 'packing' or picking_type_code not in ('incoming','outgoing')"/>
+            </button>
+            <xpath expr="//header" position="inside">
+                <button name="action_print_shipping_label"
+                    string="Shipping Label"
+                    type="object"
+                    class="btn-primary"
+                    invisible="state != 'done'" />
+                <button 
+                    name="button_whole_scrap" 
+                    string="Scrap"
+                    type="object" 
+                    class="btn-secondary"
+                    invisible="state != 'done' or picking_type_code != 'incoming'"
+                    help="Scrap all products to virtual scrap location"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="after">
+                <div class="float-end">
+                    <field name="picking_or_packing" 
+                        widget="badge"
+                        decoration-success="picking_or_packing == 'picking'"
+                        decoration-info="picking_or_packing == 'packing'"
+                        invisible="picking_type_code not in ('incoming','outgoing') or state != 'assigned'"
+                    />
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='product_id']" position="after">
+                <field name="box_code" readonly="1" column_invisible="parent.state not in ('done','assigned') or parent.picking_type_code not in ('incoming','outgoing')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_picking_type_view_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.type.view.form.inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="is_intermediate_scrap"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Add button to existing form view -->
+    <record id="view_picking_form_inherit_print_labels" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.print.labels</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_print_product_labels" 
+                        string="Print Labels" 
+                        type="object" 
+                        class="btn-secondary"
+                        invisible="state not in ('assigned', 'done')"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

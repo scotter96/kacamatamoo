@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Group: Approve Manual Price -->
+        <record id="group_approve_price_different" model="res.groups">
+            <field name="name">Approve Manual Pricing</field>
+            <field name="comment">Can confirm SO even if prices differ from pricelist.</field>
+        </record>
+    </data>
+</odoo>

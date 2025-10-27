@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+  <menuitem id="menu_item_purchase_report_supplier_performance" name="Supplier Performance"
+    parent="purchase.purchase_report_main" action="action_window_purchase_report_supplier_performance" sequence="110"/>
+</odoo>

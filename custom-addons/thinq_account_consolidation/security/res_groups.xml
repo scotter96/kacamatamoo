@@ -1,0 +1,54 @@
+<!-- wb_consolidation/security/security.xml -->
+<odoo>
+  <data noupdate="1">
+
+    <!-- Our own category so this works on any Odoo version -->
+    <record id="module_category_consolidation" model="ir.module.category">
+      <field name="name">Consolidation</field>
+      <field name="sequence">60</field>
+    </record>
+
+    <record id="group_consolidation_user" model="res.groups">
+      <field name="name">Consolidation User</field>
+      <field name="category_id" ref="module_category_consolidation"/>
+    </record>
+
+    <record id="group_consolidation_manager" model="res.groups">
+      <field name="name">Consolidation Manager</field>
+      <field name="category_id" ref="module_category_consolidation"/>
+      <field name="implied_ids" eval="[(4, ref('group_consolidation_user'))]"/>
+    </record>
+
+    <!-- Record rules (batasi berdasar akses multi-company user) -->
+  <!-- Consolidated COA -->
+      <record id="rule_coa_company" model="ir.rule">
+        <field name="name">Consolidated COA by company</field>
+        <field name="model_id" ref="model_consolidation_coa"/>
+        <field name="global" eval="False"/>
+        <field name="groups" eval="[(4, ref('group_consolidation_user'))]"/>
+        <field name="domain_force">[('company_id','in', user.company_ids.ids)]</field>
+      </record>
+
+      <record id="rule_coa_line_company" model="ir.rule">
+        <field name="name">Consolidated COA Line by company</field>
+        <field name="model_id" ref="model_consolidation_coa_line"/>
+        <field name="global" eval="False"/>
+        <field name="groups" eval="[(4, ref('group_consolidation_user'))]"/>
+        <field name="domain_force">[('company_id','in', user.company_ids.ids)]</field>
+      </record>
+
+      <!-- Consolidation Link: boleh lihat link yang melibatkan company user -->
+      <record id="rule_link_parent_or_child_is_mine" model="ir.rule">
+        <field name="name">Consolidation Link I can see</field>
+        <field name="model_id" ref="model_consolidation_link"/>
+        <field name="global" eval="False"/>
+        <field name="groups" eval="[(4, ref('group_consolidation_user'))]"/>
+        <field name="domain_force">['|', ('parent_id','in', user.company_ids.ids), ('child_id','in', user.company_ids.ids)]</field>
+      </record>
+
+  </data>
+
+
+  
+
+</odoo>

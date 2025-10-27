@@ -1,0 +1,30 @@
+<odoo>
+  <record id="view_consolidated_report_wizard_form" model="ir.ui.view">
+    <field name="name">consolidated.report.wizard.form</field>
+    <field name="model">consolidated.report.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Consolidated Report" create="false" edit="false">
+        <group>
+          <field name="root_company_id" required="1"/>
+          <field name="date_from" required="1"/>
+          <field name="date_to" required="1"/>
+          <field name="favourite_name"/>
+        </group>
+        <footer>
+          <button string="Generate Eliminating Entries" name="action_generate_eliminations" type="object" class="oe_highlight"/>
+          <button name="action_open_balance_sheet" type="object" string="Open Balance Sheet" class="btn-primary"/>
+          <button name="action_open_profit_loss" type="object" string="Open Profit &amp; Loss"/>
+          <button name="action_open_cashflow" type="object" string="Open Cash Flow"/>
+          <button special="cancel" string="Close"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_consolidated_report_wizard" model="ir.actions.act_window">
+    <field name="name">Consolidated Report</field>
+    <field name="res_model">consolidated.report.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Window untuk Brand -->
+    <record id="action_brand" model="ir.actions.act_window">
+        <field name="name">Brand</field>
+        <field name="res_model">thinq.brand</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first brand
+            </p>
+        </field>
+    </record>
+
+    <!-- Form View untuk Brand -->
+    <record id="view_brand_form" model="ir.ui.view">
+        <field name="name">thinq.brand.form</field>
+        <field name="model">thinq.brand</field>
+        <field name="arch" type="xml">
+            <form string="Brand">
+                <sheet>
+                    <group>
+                        <field name="brand_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List View untuk Brand -->
+    <record id="view_brand_tree" model="ir.ui.view">
+        <field name="name">thinq.brand.list</field>
+        <field name="model">thinq.brand</field>
+        <field name="arch" type="xml">
+            <list string="Brands">
+                <field name="brand_name"/>
+            </list>
+        </field>
+    </record>
+</odoo>

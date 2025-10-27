@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_view_form_pos" model="ir.ui.view">
+        <field name="name">res.partner.view.form.pos</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title mb24">
+                        <h1>
+                            <field id="individual" options="{'line_breaks': False}" widget="text" class="text-break" name="name" default_focus="1" placeholder="e.g. Brandon Freeman" invisible="is_company" required="type == 'contact'"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                <span>Address</span>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                                <field name="city_id" placeholder="City" class="o_address_city" options="{'no_open': True, 'no_quick_create': True}" readonly="type == 'contact' and parent_id"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" readonly="type == 'contact' and parent_id" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="type == 'contact' and parent_id"/>
+                                <div name="partner_address_country" class="d-flex justify-content-between">
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="type == 'contact' and parent_id"/>
+                                </div>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="phone" widget="phone"/>
+                            <!-- <field name="mobile" widget="phone"/> -->
+                            <field name="email" widget="email" context="{'gravatar_image': True}"/>
+                            <field name="birthday" />
+                            <field name="ktp_file" widget="image" class="oe_avatar" required="birthday" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="thinq_res_partner_action_edit_pos" model="ir.actions.act_window">
+        <field name="name">Edit Partner</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="thinq_pos.res_partner_view_form_pos"/>
+    </record>
+
+    <record id="thinq_pos_view_partner_form" model="ir.ui.view">
+        <field name="name">thinq_pos.res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='image_1920']" position="after">
+                <field name="create_date" invisible="1" />
+                <field name="created_today" invisible="1" />
+            </xpath>
+
+            <xpath expr="//field[@name='function']" position="before">
+                <field name="birthday" />
+                <field name="ktp_file" widget="image" />
+            </xpath>
+
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="readonly">user_ids</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='street']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='street2']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='city']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='zip']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="readonly">parent_id</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="thinq_pos_view_partner_form_address_inherit_thinq" model="ir.ui.view">
+        <field name="name">thinq_pos.res.partner.form.address.inherit.thinq</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="thinq_base.view_partner_form_inherit_thinq"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='city_id']" position="after">
+                <field name="create_date" invisible="1" />
+                <field name="created_today" invisible="1" />
+            </xpath>
+
+            <xpath expr="//field[@name='city_id']" position="attributes">
+                <attribute name="readonly">(type == 'contact' and parent_id)</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="thinq_pos_res_partner_tax_form_view" model="ir.ui.view">
+        <field name="name">thinq_pos.res.partner.form.address.inherit.thinq</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_id_efaktur.res_partner_tax_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='l10n_id_pkp']" position="after">
+                <field name="create_date" invisible="1" />
+                <field name="created_today" invisible="1" />
+            </xpath>
+
+            <xpath expr="//field[@name='l10n_id_pkp']" position="attributes">
+                <attribute name="readonly">(country_id and country_code != 'ID')</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_inter_tranfer_form" model="ir.ui.view">
+            <field name="name">inter.tranfer.form</field>
+            <field name="model">inter.tranfer</field>
+            <field name="arch" type="xml">
+                <form string="Internal Warehouse" chatter_position="bottom">
+                    <header>
+                        <field name="approve_by_manager" invisible="1"/>
+                        <field name="is_generate" invisible="1"/>
+                        <button name="generate_internal_transfer" string="Generate Transfers" type="object" class="btn-primary" invisible="is_generate != True"/>
+                        <button name="approve_transfer" string="Approve" type="object" class="btn-primary" groups="stock.group_stock_manager" invisible="not approve_by_manager or state in ('waiting','approve','done','cancel')"/>
+                        <button name="cancel_transfer" string="Cancel" type="object" class="oe_stat_button" invisible="state in ('approve','cancel','done')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approve,waiting,cancel,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <field name="is_picking" invisible="1"/>
+                            <button name="action_view_generated_transfer" type="object" class="oe_stat_button" icon="fa-truck" invisible="is_picking == False">
+                                <span>Transfers</span>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" class="o_text_overflow" placeholder="Transfers"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="state != 'draft'"/>
+                                <field name="picking_type_id" readonly="state != 'draft'"/>
+                                <field name="transit_location_id" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="location_id" readonly="state != 'draft'"/>
+                                <field name="location_dest_id" 
+                                       readonly="1" 
+                                       force_save="1"
+                                       options="{'no_create': True, 'no_create_edit': True}" 
+                                       domain="location_dest_domain"/>
+                                <field name="location_dest_domain" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="product_opt" string="Products/Operations">
+                                <field name="product_opt_ids" readonly="state != 'draft'">
+                                    <list editable="bottom">
+                                        <field name="product_id" required="1"/>
+                                        <field name="demand_qty" required="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="internal_page" string="Notes">
+                                <field name="internal_note" readonly="state != 'draft'"/>
+                                <div class="oe_clear"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_inter_tranfer_list" model="ir.ui.view">
+            <field name="name">inter.tranfer.list</field>
+            <field name="model">inter.tranfer</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="picking_type_id"/>
+                    <field name="transit_location_id"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_inter_war_transfer" model="ir.actions.act_window">
+            <field name="name">Internal Warehouse Transfer</field>
+            <field name="res_model">inter.tranfer</field>
+            <field name="view_mode">form,list</field>
+            <field name="view_id" ref="view_inter_tranfer_list"/>
+        </record>
+
+        <menuitem id="inter_war_transfer"
+            name="Inter Warehouse Transfers" 
+            parent="stock.menu_stock_root" 
+            sequence="6" 
+            action="action_inter_war_transfer" 
+            groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+    </data>
+</odoo>

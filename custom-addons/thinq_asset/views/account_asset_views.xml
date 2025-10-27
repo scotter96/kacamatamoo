@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_asset_view_list_inherit" model="ir.ui.view">
+            <field name="name">account.asset.view.list.inherit</field>
+            <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="asset_code"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_account_asset_form_inherit_ga" model="ir.ui.view">
+            <field name="name">account.asset.form.inherit.ga</field>
+            <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//div[contains(@class,'oe_title')]" position="after">
+                    <div class="oe_title">
+                        <label for="asset_code" string="Asset Code"/>
+                        <field name="asset_code" invisible="state == 'model'"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//page[@name='main_page']/group" position="inside">
+                    <group string="Tax &amp; Notes">
+                        <field name="tax_class"/>
+                        <field name="additional_notes"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="GA" name="ga_info">
+                        <group string="Asset Info">
+                            <field name="ga_asset_category_id" options="{'no_create': True, 'no_edit': True}"/>
+                            <!-- <field name="department_id"/> -->
+                            <field name="analytic_account_id"/>
+                            <field name="year_of_purchase"/>
+                            <field name="month_of_purchase"/>
+                        </group>
+
+                        <group string="Employee Info">
+                            <field name="employee_id_char"/>
+                            <field name="employee_name"/>
+                            <field name="asset_conditions"/>
+                        </group>
+
+                        <field name="ga_asset_attribute_ids">
+                            <list editable="bottom">
+                                <field name="attribute_id" />
+                                <field name="value"/>
+                            </list>
+                            <form>
+                                <group>
+                                    <field name="attribute_id" />
+                                    <field name="value"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_account_asset_form_inherit_label" model="ir.ui.view">
+            <field name="name">account.asset.form.inherit.label</field>
+            <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="%(action_asset_label_layout_wizard)d"
+                            string="Print Labels"
+                            type="action"
+                            class="btn-primary"
+                            icon="fa-print"/>
+                </header>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+
+        <record id="thinq_project_contact_result_view_tree" model="ir.ui.view">
+            <field name="name">thinq.project.contact.result.view.tree</field>
+            <field name="model">thinq.project.contact.result</field>
+            <field name="arch" type="xml">
+                <list sample="1" multi_edit="1" editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- Action Contact Result -->
+        <record id="action_contact_result_config" model="ir.actions.act_window">
+            <field name="name">Contact Result</field>
+            <field name="res_model">thinq.project.contact.result</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_contact_result_config" name="Contact Result" parent="project.menu_project_config" sequence="11" action="action_contact_result_config"/>
+
+        <record id="thinq_project_visit_status_view_tree" model="ir.ui.view">
+            <field name="name">thinq.project.visit.status.view.tree</field>
+            <field name="model">thinq.project.visit.status</field>
+            <field name="arch" type="xml">
+                <list sample="1" multi_edit="1" editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action Visit Status -->
+        <record id="action_visit_status_config" model="ir.actions.act_window">
+            <field name="name">Visit Status</field>
+            <field name="res_model">thinq.project.visit.status</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <menuitem id="menu_visit_status_config" name="Visit Status" parent="project.menu_project_config" sequence="12" action="action_visit_status_config"/>
+
+    </data>
+</odoo>

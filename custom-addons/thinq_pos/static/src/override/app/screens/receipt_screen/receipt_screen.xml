@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.ReceiptScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-container')]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+
+        <xpath expr="(//button[hasclass('button', 'print')])[1]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+
+        <xpath expr="(//button[hasclass('button', 'print')])[2]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+
+        <xpath expr="(//button[hasclass('button', 'print')])[2]" position="after">
+            <button class="button print-invoice btn btn-lg btn-secondary w-100 py-3" t-on-click="() => this.doPrintInvoice()">
+                <i class="fa fa-print"/> Print Invoice
+            </button>
+            <button class="button print-invoice-wa btn btn-lg btn-success w-100 py-3" t-on-click="() => this.sendWhatsappMessage()">
+                <i class="fa fa-whatsapp"/> Send via Whatsapp
+            </button>
+        </xpath>
+    </t>
+
+</templates>

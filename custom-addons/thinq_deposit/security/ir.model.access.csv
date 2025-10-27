@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_thinq_deposit_user,thinq.deposit.user,model_thinq_deposit,account.group_account_user,1,1,1,0
+access_thinq_deposit_manager,thinq.deposit.manager,model_thinq_deposit,account.group_account_manager,1,1,1,1
+access_thinq_deposit_line_user,thinq.deposit.line.user,model_thinq_deposit_line,account.group_account_user,1,1,1,0
+access_thinq_deposit_line_manager,thinq.deposit.line.manager,model_thinq_deposit_line,account.group_account_manager,1,1,1,1
+access_thinq_deposit_apply_wizard_user,thinq.deposit.apply.wizard.user,model_thinq_deposit_apply_wizard,account.group_account_user,1,1,1,1
+access_thinq_deposit_apply_line_user,thinq.deposit.apply.line.user,model_thinq_deposit_apply_line,account.group_account_user,1,1,1,1

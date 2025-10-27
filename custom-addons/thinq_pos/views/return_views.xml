@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="thinq_pos_vpicktree" model="ir.ui.view">
+            <field name="name">stock.picking.list</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <list string="Picking list">
+                    <field name="company_id" column_invisible="True"/>
+                    <field name="priority" optional="show" widget="priority" nolabel="1"/>
+                    <field name="name" decoration-bf="1"/>
+                    <field name="location_id" options="{'no_create': True}" string="From" groups="stock.group_stock_multi_locations" optional="show" readonly="state == 'done'"/>
+                    <field name="location_dest_id" options="{'no_create': True}" string="To" groups="stock.group_stock_multi_locations" optional="show" readonly="state == 'done'"/>
+                    <field name="partner_id" optional="show" readonly="state in ['cancel', 'done']"/>
+                    <field name="is_signed" string="Signed" optional="hide" groups="stock.group_stock_sign_delivery"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user" readonly="state in ['cancel', 'done']"/>
+                    <field name="scheduled_date" optional="show" widget="remaining_days" invisible="state in ('done', 'cancel')" readonly="state in ['cancel', 'done']"/>
+                    <field name="picking_type_code" column_invisible="True"/>
+                    <field name="products_availability_state" column_invisible="True" options='{"lazy": true}'/>
+                    <field name="products_availability" options='{"lazy": true}'
+                        optional="hide"
+                        invisible="picking_type_code != 'outgoing' or state not in ['confirmed', 'waiting', 'assigned']"
+                        decoration-success="state == 'assigned' or products_availability_state == 'available'"
+                        decoration-warning="state != 'assigned' and products_availability_state in ('expected', 'available')"
+                        decoration-danger="state != 'assigned' and products_availability_state == 'late'"/>
+                    <field name="date_deadline" optional="hide" widget="remaining_days" invisible="state in ('done', 'cancel')"/>
+                    <field name="date_done" string="Effective Date" optional="hide"/>
+                    <field name="origin" optional="show" readonly="state in ['cancel', 'done']"/>
+                    <field name="backorder_id" optional="hide"/>
+                    <field name="picking_type_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                    <field name="state" optional="show" widget="badge"
+                           decoration-danger="state=='cancel'"
+                           decoration-info="state== 'assigned'"
+                           decoration-muted="state == 'draft'"
+                           decoration-success="state == 'done'"
+                           decoration-warning="state not in ('draft','cancel','done','assigned')"/>
+                </list>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_return_list">
+            <field name="name">POS Return</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">list</field>
+            <field name="target">new</field>
+            <field name="context">{'contact_display': 'partner_address', 'default_company_id': allowed_company_ids[0], 'dialog_size': 'large'}</field>
+            <field name="view_id" ref="thinq_pos_vpicktree" />
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_return_form">
+            <field name="name">POS Return</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'contact_display': 'partner_address', 'default_company_id': allowed_company_ids[0], 'dialog_size': 'large'}</field>
+            <field name="view_id" ref="stock.view_picking_form" />
+        </record>
+
+    </data>
+</odoo>

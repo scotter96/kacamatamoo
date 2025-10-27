@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Product listing page added Pack product ribbon -->
+        <template id="product_pack_list" inherit_id="website_sale.products_item">
+            <xpath expr="//div[hasclass('oe_product_image')]" position="inside">
+                <t t-if="product and product.is_pack == True">
+                    <div class="o_ribbon">
+                        <div class="o_ribbon btn-danger o_ribbon_right">Pack</div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="pack_in_single_product_page" inherit_id="website_sale.product_price">
+            <xpath expr="//div/h3[hasclass('css_editable_mode_hidden')]" position="after">
+                <t t-if="product.is_pack == True">
+                    <a class="btn btn-primary pack_details mb-2" href="#" data-toggle="modal" data-target="#myPack">
+                        <b>Pack Details</b>
+                    </a>
+                </t>
+                <!-- Modal -->
+                <div class="modal fade" id="myPack" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="PackModalLabel">
+                                    <b>Pack Products</b>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </div>
+                            <div class="modal-body" style="overflow: scroll;max-height: 400px;display: inherit;">
+                                <t t-foreach="product.pack_ids" t-as="pack">
+                                    <div class="col-xs-12 col-sm-6 col-md-3 px-2">
+                                        <div class="pack_products_item_image" style="height: 205px;">
+                                            <a t-att-href="'/shop/product/%s' % pack.product_id.product_tmpl_id.id">
+                                                <span t-field="pack.bi_image"
+                                                      t-options='{"widget": "image", "class": "img img-responsive"}'/>
+                                            </a>
+                                        </div>
+                                        <div class="pack-name">
+                                            <h6>
+                                                <a t-att-href="'/shop/product/%s' % pack.product_id.product_tmpl_id.id"
+                                                   t-field="pack.product_id.display_name"/>
+                                            </h6>
+                                        </div>
+                                        <div class="pack-price">
+                                            <!-- Price -->
+                                            <span>
+                                                <b>Unit Price:</b>
+                                                <span t-field="pack.product_id.lst_price"
+                                                      style="white-space: nowrap; color: #D9534F;"
+                                                      t-options="{'widget': 'monetary','display_currency': website.currency_id}"/>
+                                            </span>
+                                            <!-- End Price -->
+                                        </div>
+                                        <div class="pack-qty">
+                                            <!-- qty -->
+                                            <span>
+                                                <b>Quantity:</b>
+                                                <span t-esc="int(float(pack.qty_uom))" style="color: #D9534F;"/>
+                                            </span>
+                                            <!-- End qty -->
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
+

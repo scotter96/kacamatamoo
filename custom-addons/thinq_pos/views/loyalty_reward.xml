@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="loyalty_reward_view_form_inherit" model="ir.ui.view">
+            <field name="name">loyalty.reward.view.form.inherit</field>
+            <field name="model">loyalty.reward</field>
+            <field name="inherit_id" ref="loyalty.loyalty_reward_view_form"/>
+            <field name="arch" type="xml">
+                <field name="discount_product_domain" position="attributes">
+                    <attribute name="invisible">discount_applicability not in ('cheapest','specific')</attribute>
+                </field>
+                <field name="discount_product_ids" position="attributes">
+                    <attribute name="invisible">discount_applicability not in ('cheapest','specific')</attribute>
+                </field>
+                <field name="discount_product_category_id" position="attributes">
+                    <attribute name="invisible">discount_applicability not in ('cheapest','specific')</attribute>
+                </field>
+                <field name="discount_product_tag_id" position="attributes">
+                    <attribute name="invisible">discount_applicability not in ('cheapest','specific')</attribute>
+                </field>
+            </field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

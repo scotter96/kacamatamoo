@@ -1,0 +1,91 @@
+<odoo>
+    <template id="shipping_label_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="picking">
+                <div style="width:38mm; height:70mm; border:2px solid #000; border-radius:6px; padding:1.5mm; font-size:8px; position:relative; font-family:sans-serif;">
+                    <!-- Header: Logo+Company Name dan QR Code sejajar -->
+                    <table style="width:100%; margin-bottom:2mm;">
+                        <tr>
+                            <!-- Bagian kiri: Logo + Nama Company -->
+                            <td style="width:70%; vertical-align:top;">
+                                <img
+                                    t-att-src="request.env['ir.config_parameter'].sudo().get_param('web.base.url') + '/thinq_inventory/static/description/img/logo_header.png'"
+                                    style="height:8mm; max-width:100%; display:block; margin-bottom:0.5mm;"
+                                />
+                            </td>
+                            <!-- Bagian kanan: QR Code -->
+                            <td style="width:30%; vertical-align:top; text-align:right;">
+                                <img t-att-src="request.env['ir.config_parameter'].sudo().get_param('web.base.url') + '/thinq_inventory/qr?picking_id=%s' % picking.id"
+                                    style="height:8mm; width:8mm; border:1px solid #000;"
+                                    alt="QR Code"/>
+                            </td>
+                        </tr>
+                    </table>
+                   
+                    <hr style="border:1px solid #000; margin:2px 0;"/>
+                    <!-- PENERIMA -->
+                    <div style="font-weight:bold; margin-bottom:1mm;">PENERIMA :</div>
+                    <div style="margin-bottom:2mm;">
+                        <t t-if="picking.picking_type_code == 'outgoing'">
+                            <!-- Delivery: Penerima = partner_id -->
+                            <span t-field="picking.partner_id.name"/><br/>
+                            <span t-field="picking.partner_id.street"/><br/>
+                            <span t-if="picking.partner_id.city"><span t-field="picking.partner_id.city"/>, </span>
+                            <span t-if="picking.partner_id.state_id.name"><span t-field="picking.partner_id.state_id.name"/>, </span>
+                            <span t-if="picking.partner_id.country_id.name"><span t-field="picking.partner_id.country_id.name"/></span><br/>
+                            <span t-field="picking.partner_id.phone"/>
+                        </t>
+                        <t t-if="picking.picking_type_code == 'incoming'">
+                            <!-- Receipt: Penerima = picking.company_id -->
+                            <span t-field="picking.company_id.name"/><br/>
+                            <span t-field="picking.company_id.street"/><br/>
+                            <span t-field="picking.company_id.phone"/>
+                        </t>
+                    </div>
+                    <hr style="border:1px solid #000; margin:2px 0;"/>
+                    <!-- PENGIRIM -->
+                    <div style="font-weight:bold; margin-bottom:1mm;">PENGIRIM :</div>
+                    <div style="margin-bottom:2mm;">
+                        <t t-if="picking.picking_type_code == 'outgoing'">
+                            <!-- Delivery: Pengirim = location_id.company_id -->
+                            <span t-field="picking.location_id.company_id.name"/><br/>
+                            <span t-field="picking.location_id.company_id.street"/><br/>
+                            <span t-field="picking.location_id.company_id.phone"/>
+                        </t>
+                        <t t-if="picking.picking_type_code == 'incoming'">
+                            <!-- Receipt: Pengirim = partner_id -->
+                            <span t-field="picking.partner_id.name"/><br/>
+                            <span t-field="picking.partner_id.street"/><br/>
+                            <span t-if="picking.partner_id.city"><span t-field="picking.partner_id.city"/>, </span>
+                            <span t-if="picking.partner_id.state_id.name"><span t-field="picking.partner_id.state_id.name"/>, </span>
+                            <span t-if="picking.partner_id.country_id.name"><span t-field="picking.partner_id.country_id.name"/></span><br/>
+                            <span t-field="picking.partner_id.phone"/>
+                        </t>
+                    </div>
+                    <hr style="border:1px solid #000; margin:2px 0;"/>
+                    <!-- FPO DAILY -->
+                    <div style="font-weight:bold; margin-bottom:0.5mm; font-size:6px;">FPO DAILY :</div>
+                    <table style="width:100%; margin-bottom:1mm;">
+                        <tr>
+                            <!-- Bagian kiri: Shipping Icons -->
+                            <td style="width:50%; vertical-align:middle;">
+                                <img t-att-src="request.env['ir.config_parameter'].sudo().get_param('web.base.url') + '/thinq_inventory/static/description/img/fpo_label.png'"
+                                    style="height:6mm; width:auto;"/>
+                            </td>
+                            <!-- Bagian kanan: Company Logo atau Icon -->
+                            <td style="width:50%; vertical-align:middle; text-align:right;">
+                                <img
+                                    t-att-src="request.env['ir.config_parameter'].sudo().get_param('web.base.url') + '/thinq_inventory/static/description/img/logo_kotak.png'"
+                                    style="height:5mm; width:14mm; border-radius:0;"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Footer -->
+                    <div style="text-align:center; font-size:9px; margin-top:2mm;">
+                        ~ THANK YOU ~
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

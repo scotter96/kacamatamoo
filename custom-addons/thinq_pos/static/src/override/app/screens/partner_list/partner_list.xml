@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.PartnerList" t-inherit-mode="extension">
+
+        <xpath expr="(//table/thead/tr/th)[2]" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <xpath expr="//th[hasclass('partner-line-email')]" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <xpath expr="(//table/thead/tr/th)[1]" position="after">
+            <th class="partner-info-city py-2">City</th>
+            <th class="partner-info-phone py-2">Phone No</th>
+            <th class="partner-info-email py-2">E-mail</th>
+            <th class="partner-info-birthday py-2">Birthday</th>
+        </xpath>
+
+        <xpath expr="//PartnerLine" position="attributes">
+            <attribute name="onClickSetAsCustomer.bind">(p) => this.setAsCustomer(p)</attribute>
+        </xpath>
+
+    </t>
+
+</templates>

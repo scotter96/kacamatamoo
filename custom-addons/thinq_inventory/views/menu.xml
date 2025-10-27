@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Submenu: Material -->
+    <menuitem 
+        id="menu_material_sub"
+        name="Material"
+        parent="stock.menu_product_in_config_stock"
+        action="action_material"
+        sequence="51"/>
+
+    <!-- Submenu: Color -->
+    <menuitem
+        id="menu_color_sub"
+        name="Color"
+        parent="stock.menu_product_in_config_stock"
+        action="action_color"
+        sequence="52"/>
+
+    <!-- Submenu: Bin -->
+    <!-- <menuitem
+        id="menu_bin_sub"
+        name="Bin"
+        parent="stock.menu_product_in_config_stock"
+        action="action_bin"
+        sequence="53"/> unused sudah ada feature bawaan-->
+
+    <!-- Submenu: Brand -->
+    <!-- <menuitem
+        id="menu_brand_sub"
+        name="Brand"
+        parent="stock.menu_product_in_config_stock"
+        action="action_brand"
+        sequence="54"/> -->
+
+    <!-- Submenu: Frame Shape -->
+    <menuitem
+        id="menu_frame_shape_sub"
+        name="Frame Shape"
+        parent="stock.menu_product_in_config_stock"
+        action="action_frame_shape"
+        sequence="55"/>
+</odoo>

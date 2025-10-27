@@ -1,0 +1,25 @@
+.customer-promotion-info {
+    background-color: #4472c4;
+    border: 2px solid #3c4d6b;
+    max-width: 360px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.customer-promotion-info * {
+    color: #ffffff;
+}
+
+.promotion-links {
+    cursor: pointer;
+}
+
+.promotion-links:hover {
+    text-decoration: underline;
+}

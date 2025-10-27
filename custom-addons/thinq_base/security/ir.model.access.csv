@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_city_read,Res City : Read,model_res_city,base.group_user,1,0,0,0
+access_res_city_crud,Res City : CRUD,model_res_city,base.group_erp_manager,1,1,1,1
+access_res_city_public,Res City : Public,model_res_city,,1,0,0,0
+access_res_partner_company_rel,res.partner.company.rel,base.model_res_partner,,1,1,1,1
+access_change_role,Change Role : CRUD,model_change_role,base.group_user,1,1,1,1
+access_multiple_search,access_multiple_search,model_multiple_search,base.group_user,1,1,1,1

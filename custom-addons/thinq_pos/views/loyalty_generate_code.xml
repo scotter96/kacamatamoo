@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="loyalty_generate_wizard_view_form_inherit" model="ir.ui.view">
+        <field name="name">loyalty.generate.wizard.form.inherit</field>
+        <field name="model">loyalty.generate.wizard</field>
+        <field name="inherit_id" ref="loyalty.loyalty_generate_wizard_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add format selection after mode field -->
+            <field name="description" position="after">
+                <field name="code_format" 
+                       invisible="program_type != 'coupons'"
+                       widget="radio"
+                       options="{'horizontal': true}"/>
+                
+                <!-- Predefined format fields -->
+                <div class="o_row" 
+                     invisible="code_format != 'predefined' or program_type != 'coupons'">
+                    <field name="code_prefix" 
+                           placeholder="e.g., KCMT" 
+                           required="code_format == 'predefined' and program_type == 'coupons'"
+                           class="oe_inline"
+                           style="width: 150px;"/>
+                    <span class="oe_inline mx-2">-</span>
+                    <field name="code_digits" 
+                           required="code_format == 'predefined' and program_type == 'coupons'"
+                           class="oe_inline"
+                           style="width: 80px;"/>
+                    <span class="oe_inline ml-2 text-muted">digits</span>
+                </div>
+                
+                <!-- Example preview -->
+                <div class="alert alert-info" 
+                     invisible="code_format != 'predefined' or program_type != 'coupons'"
+                     role="alert">
+                    <i class="fa fa-info-circle" title="Information"/> 
+                    <strong>Example:</strong> 
+                    <span>With prefix "KCMT" and 4 digits, codes will be: KCMT0001, KCMT0002, KCMT0003, etc.</span>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>

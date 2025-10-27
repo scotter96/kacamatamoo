@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="0">
+    
+        <function model="stock.warehouse" name="create_missing_scrap_intermediate"/>
+    
+    </data>
+    
+
+</odoo>

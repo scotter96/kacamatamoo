@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit CRM Lead/Opportunity Form View -->
+        <record id="view_crm_lead_form_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit.thinq</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Tambahkan Customer City setelah Phone -->
+                <xpath expr="//group[@name='opportunity_partner']" position="inside">
+                    <field name="customer_city_id" 
+                           string="Customer City"
+                           options="{'no_create': True, 'no_edit': True}"
+                           help="Kota tempat calon customer. Berhubungan dengan Module Contact."/>
+                </xpath>
+
+                <!-- Replace city field di Extra Information -->
+                <xpath expr="//page[@name='lead']//field[@name='city']" position="replace">
+                    <field name="city_id" placeholder="City" class="o_address_city"
+                        options="{'no_create': True}"
+                        context="{'default_state_id': state_id}"/>
+                    <field name="city" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit CRM Lead/Opportunity Tree View -->
+        <record id="view_crm_lead_tree_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.tree.inherit.thinq</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <!-- Tambahkan kolom Customer City di tree view -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="customer_city_id" 
+                           string="Customer City"
+                           optional="show"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

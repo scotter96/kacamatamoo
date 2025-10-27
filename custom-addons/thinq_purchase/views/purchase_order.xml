@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_purchase_order_form_inherit_scrap" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.scrap</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                <attribute name="groups">purchase.group_purchase_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                <attribute name="groups">purchase.group_purchase_manager</attribute>
+            </xpath>
+            <xpath expr="//div[contains(@class,'oe_button_box')]" position="inside">
+                <button
+                    name="action_view_scraps"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-trash"
+                    invisible="scrap_count == 0">
+                    <field name="scrap_count" widget="statinfo" string="Scraps"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+                <field name="request_line_ref"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_received']" position="after">
+              <field name="qty_received_after_scrap" string="Received" column_invisible="parent.state not in ('purchase', 'done')"/>
+              <field name="scrapped_qty" column_invisible="parent.state not in ('purchase', 'done')"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_received']" position="attributes">
+                <attribute name="optional">hide</attribute>
+                <attribute name="string">Received Before Scrap</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

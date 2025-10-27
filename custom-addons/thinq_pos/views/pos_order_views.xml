@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_pos_order_form_inherit_refraction" model="ir.ui.view">
+            <field name="name">pos.order.form.inherit.refraction</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <div class="float-end">
+                        <field name="picked_up_state" 
+                            widget="badge"
+                            decoration-success="picked_up_state == 'done'"
+                            decoration-muted="picked_up_state == 'draft'"
+                            decoration-warning="picked_up_state == 'partially'"
+                            invisible="amount_total &lt; 0"
+                        />
+                    </div>
+                </xpath>
+                <button name="refund" position="after">
+                    <button string="Picked Up All" name="picked_up_all" type="object" class="oe_highlight" invisible="amount_total &lt; 0 or picked_up_state == 'done' or state in ('draft','cancel')"/>
+                </button>
+                <xpath expr="//notebook//page[@name='products']" position="after">
+                    <page string="Lens Prescriptions" name="lens_prescriptions">
+                        <field name="refraction_line_ids" nolabel="1" readonly="state != 'draft'">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="side" required="1"/>
+                                <field name="frame_name" required="1"/>
+                                <field name="vitrum_spher" required="1"/>
+                                <field name="vitrum_cylndr" required="1"/>
+                                <field name="axis" required="1"/>
+                                <field name="prima_basis" required="1"/>
+                                <field name="add" required="1"/>
+                                <field name="pd" required="1"/>
+                                <field name="erc" required="1"/>
+                                <field name="ocular_dominance" required="1"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list//field[@name='product_id']" position="before">
+                    <field name="picked_up" optional="show" column_invisible="parent.amount_total &lt; 0" force_save="1"/>
+                    <field name="picked_date" optional="show" column_invisible="parent.amount_total &lt; 0" readonly="1" force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='lines']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                    <attribute name="delete">false</attribute>
+                    <attribute name="create">false</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list/field[@name='product_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list/field[@name='qty']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list/field[@name='discount']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list/field[@name='price_unit']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list/field[@name='price_subtotal_incl']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lines']/list/field[@name='tax_ids_after_fiscal_position']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

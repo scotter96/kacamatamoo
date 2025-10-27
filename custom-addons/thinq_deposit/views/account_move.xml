@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Invoice Form to add Apply Deposit button -->
+    <record id="view_move_form_inherit_deposit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.deposit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Apply Deposit button in header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_apply_deposit" 
+                        string="Apply Deposit" 
+                        type="object" 
+                        class="oe_highlight"
+                        invisible="state != 'posted' or payment_state in ['paid', 'in_payment']"
+                        groups="account.group_account_user"/>
+            </xpath>
+            
+            <!-- Add deposit information in a new page -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Applied Deposits" invisible="not deposit_line_ids">
+                    <group>
+                        <field name="total_deposit_applied" readonly="1"/>
+                    </group>
+                    <field name="deposit_line_ids" readonly="1">
+                        <list>
+                            <field name="date"/>
+                            <field name="deposit_id"/>
+                            <field name="amount"/>
+                            <field name="currency_id"/>
+                            <field name="notes"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

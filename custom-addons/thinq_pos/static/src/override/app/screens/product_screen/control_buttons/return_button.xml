@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="thinq_pos.ReturnButton">
+        <button
+            t-attf-class="{{this.props.class}}"
+            t-on-click="() => this.onClick()">
+            <t t-if="this.props.icon">
+                <i t-attf-class="{{this.props.icon}} me-1"/>
+            </t>
+            <span t-esc="this.props.label"/>
+        </button>
+    </t>
+</templates>

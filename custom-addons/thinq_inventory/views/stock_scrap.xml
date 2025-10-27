@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- test perubahan lagi-->
+    <record id="stock_scrap_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.scrap.form.inherit.two.phase</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Update header buttons -->
+            <xpath expr="//header" position="replace">
+                <header>
+                    <!-- Phase 1: Confirm Scrap -->
+                    <button name="action_confirm_scrap" 
+                            string="Confirm Scrap" 
+                            type="object" 
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                </header>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Inherit tree view untuk menunjukkan source document type -->
+    <record id="stock_scrap_tree_view_inherit" model="ir.ui.view">
+        <field name="name">stock.scrap.tree.inherit.source</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="picking_id" string="Source Document" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_open_scrap_form" model="ir.actions.act_window">
+        <field name="name">Scrap Order</field>
+        <field name="res_model">stock.scrap</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>
