@@ -189,8 +189,17 @@ class PosOrderLine(models.Model):
     )
 
     picked_date = fields.Datetime('Picked On', copy=False)
+    picked_lock = fields.Boolean('Picked Locked')
 
+    def write(self, vals):
+        if vals.get('picked_up', False):
+            vals.update({'picked_lock': True})
+        res = super(PosOrderLine, self).write(vals)
+        return res
+    
     @api.onchange('picked_up')
     def _onchange_picked_up(self):
         if self.picked_up:
             self.picked_date = datetime.now()
+        else:
+            self.picked_date = False

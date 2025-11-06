@@ -41,8 +41,9 @@
                     </page>
                 </xpath>
                 <xpath expr="//field[@name='lines']/list//field[@name='product_id']" position="before">
-                    <field name="picked_up" optional="show" column_invisible="parent.amount_total &lt; 0" force_save="1"/>
+                    <field name="picked_up" optional="show" column_invisible="parent.amount_total &lt; 0" readonly="picked_lock" force_save="1"/>
                     <field name="picked_date" optional="show" column_invisible="parent.amount_total &lt; 0" readonly="1" force_save="1"/>
+                    <field name="picked_lock" column_invisible="1" readonly="1" force_save="1"/>
                 </xpath>
                 <xpath expr="//field[@name='lines']" position="attributes">
                     <attribute name="readonly">0</attribute>

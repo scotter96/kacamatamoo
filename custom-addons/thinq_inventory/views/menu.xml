@@ -25,12 +25,12 @@
         sequence="53"/> unused sudah ada feature bawaan-->
 
     <!-- Submenu: Brand -->
-    <!-- <menuitem
+    <menuitem
         id="menu_brand_sub"
         name="Brand"
         parent="stock.menu_product_in_config_stock"
         action="action_brand"
-        sequence="54"/> -->
+        sequence="54"/>
 
     <!-- Submenu: Frame Shape -->
     <menuitem

@@ -12,6 +12,11 @@ class ProductTemplate(models.Model):
     cal_pack_price = fields.Boolean(string='Calculate Pack Price')
     pack_ids = fields.One2many(comodel_name='product.pack', inverse_name='bi_product_template', string='Product pack')
 
+    @api.onchange('is_pack')
+    def _onchange_is_pack(self):
+        if not self.is_pack and self.pack_ids:
+            self.pack_ids = [(6,0,[])]
+
     @api.onchange('cal_pack_price')
     def _onchange_cal_pack_price(self):
         if self.cal_pack_price:
@@ -19,21 +24,13 @@ class ProductTemplate(models.Model):
 
     @api.onchange('list_price')
     def _onchange_list_price(self):
-        product_data = self.env['product.template'].search([('is_pack', '=', True)])
-        prd_temp = False
-        for record in product_data.pack_ids:
-            if record.product_id:
-                prd_temp = record.bi_product_template
-                total = 0
-                for main in prd_temp.pack_ids:
-                    if main.product_id.product_tmpl_id == self._origin:
-                        total += self.list_price
-                    else:
-                        qty = main.qty_uom
-                        total += main.product_id.list_price * qty
-                if prd_temp:
-                    if prd_temp.cal_pack_price:
-                        prd_temp.list_price = total
+        if not self.is_pack or not self.cal_pack_price:
+            return
+        total = sum(
+            (line.product_id.list_price or 0.0) * (line.qty_uom or 1.0)
+            for line in self.pack_ids
+        )
+        self.list_price = total
 
     # @api.model
     # def create(self, vals):

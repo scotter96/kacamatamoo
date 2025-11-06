@@ -8,3 +8,4 @@ from . import loyalty_reward
 from . import loyalty_generate_code
 from . import pos_promotion
 from . import pos_config
+from . import stock_picking

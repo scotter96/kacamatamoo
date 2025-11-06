@@ -21,4 +21,13 @@ patch(ProductScreen.prototype, {
         });
     },
 
+    getProductName(product) {
+        // override
+        var productName = product.display_name;
+        if (product.default_code) {
+            productName = "[" + product.default_code + "] " + productName;
+        }
+        return productName;
+    },
+
 });

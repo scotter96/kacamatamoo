@@ -13,6 +13,7 @@ class SaleOrder(models.Model):
     confirm_price_approved = fields.Boolean(
         "Approve Price Different",
         default=False,
+        copy=False,
         help="Checked by Finance or authorized user"
     )
 
