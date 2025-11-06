@@ -1,0 +1,64 @@
+<!-- thinq_account_consolidation/views/consol_group.xml -->
+<odoo>
+
+  <!-- ========== SEARCH VIEW ========== -->
+  <record id="view_consolidation_group_search" model="ir.ui.view">
+    <field name="name">consolidation.group.search</field>
+    <field name="model">consolidation.group</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="parent_id"/>
+      </search>
+    </field>
+  </record>
+
+  <!-- ========== list (LIST) VIEW ========== -->
+  <record id="view_consolidation_group_list" model="ir.ui.view">
+    <field name="name">consolidation.group.list</field>
+    <field name="model">consolidation.group</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="parent_id"/>
+        <field name="child_ids"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ========== FORM VIEW ========== -->
+  <record id="view_consolidation_group_form" model="ir.ui.view">
+    <field name="name">consolidation.group.form</field>
+    <field name="model">consolidation.group</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <field name="name"/>
+          <field name="parent_id"/>
+          <field name="child_ids"/>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- ========== ACTION ========== -->
+  <record id="action_consolidation_groups" model="ir.actions.act_window">
+    <field name="name">Elimination Rules</field>
+    <field name="res_model">consolidation.group</field>
+    <field name="view_mode">list,form</field>
+    <field name="search_view_id" ref="view_consolidation_group_search"/>
+    <!-- Batasi ke manager (opsional): uncomment jika sudah punya group
+    <field name="groups_id" eval="[(4, ref('thinq_account_consolidation.group_consolidation_manager'))]"/>
+    -->
+    <field name="context">{}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create your first elimination rule
+      </p>
+      <p>
+        Define how intercompany balances and other consolidation adjustments are eliminated.
+      </p>
+    </field>
+  </record>
+
+</odoo>

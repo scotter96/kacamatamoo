@@ -7,6 +7,7 @@
     "website": "thinq-tech.id",
     "depends": [
         'accountant',
+        'account',
         'thinq_base',
     ],
     "data": [
@@ -20,6 +21,7 @@
         'views/consol_rule.xml',
         'wizard/consolidation_base.xml',
         'wizard/consolidation_result.xml',
+        'wizard/consol_group.xml',
         # 'views/res_config_settings.xml',
         
         'views/consolidation_menu.xml'

@@ -53,7 +53,9 @@ class ConsolidatedReportWizard(models.TransientModel):
             })
             payload.append(r)
         if payload:
-            Result.create(payload)
+            _f = Result._fields.keys()
+            vals = [{k: v for k, v in row.items() if k in _f} for row in payload]
+            Result.create(vals)
 
     def _open_result(self, title, statement):
         self._build_results(title, statement)
@@ -61,7 +63,7 @@ class ConsolidatedReportWizard(models.TransientModel):
             'type'     : 'ir.actions.act_window',
             'name'     : f'Consolidated {title}',
             'res_model': 'consolidated.report.result',
-            'view_mode': 'pivot,tree,graph',
+            'view_mode': 'pivot,list,graph',
             'domain'   : [('wizard_id', '=', self.id)],
             'target'   : 'current',
             'context'  : {'group_by': ['section','company_id', 'account_id']},

@@ -6,3 +6,4 @@ from . import res_config_settings
 from . import consolidation_engine
 from . import consolidation_cashflow_map
 from . import consolidation_rule
+from . import consolidation_group

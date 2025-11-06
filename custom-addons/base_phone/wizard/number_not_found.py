@@ -87,7 +87,7 @@ class NumberNotFound(models.TransientModel):
         context[f"default_{self.number_type}"] = self.e164_number
         action = {
             "name": self.env._("Create New Partner"),
-            "view_mode": "form,tree,kanban",
+            "view_mode": "form,list,kanban",
             "res_model": "res.partner",
             "type": "ir.actions.act_window",
             "target": "current",
@@ -105,7 +105,7 @@ class NumberNotFound(models.TransientModel):
             "name": self.env._("Partner: %s") % self.to_update_partner_id.name,
             "type": "ir.actions.act_window",
             "res_model": "res.partner",
-            "view_mode": "form,tree,kanban",
+            "view_mode": "form,list,kanban",
             "target": "current",
             "res_id": self.to_update_partner_id.id,
             "context": self._context,

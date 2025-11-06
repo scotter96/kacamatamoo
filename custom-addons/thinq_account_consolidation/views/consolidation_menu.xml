@@ -42,4 +42,24 @@
               parent="menu_consolidation_root"
               sequence="11"/>
 
+
+    <menuitem name="Consolidation"
+      parent="account.menu_finance_configuration"
+      id="menu_account_config_consolidation">
+      <!-- TODO: Tama -->
+      <menuitem name="Balance Sheet Grouping Config"
+        parent="menu_account_config_consolidation"
+        id="menu_account_config_consolidation_bs_group"
+        action="">
+      <!-- TODO: Tama -->
+      <menuitem name="Profit &amp; Loss Grouping Config"
+        parent="menu_account_config_consolidation"
+        id="menu_account_config_consolidation_pl_group"
+        action="">
+      <!-- TODO: Tama -->
+      <menuitem name="Cash Flow Grouping Config"
+        parent="menu_account_config_consolidation"
+        id="menu_account_config_consolidation_cf_group"
+        action="">
+
 </odoo>

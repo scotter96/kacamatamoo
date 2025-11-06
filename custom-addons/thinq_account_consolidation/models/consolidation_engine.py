@@ -43,25 +43,6 @@ class ConsolidationEngine(models.AbstractModel):
         return AML.search_read(domain, fields_to_read, limit=0)
 
     @api.model
-    def _pull_elimination_lines(self, companies, date_from, date_to):
-        """
-        Ambil Eliminating Entries yang 'posted' dalam periode & perusahaan terkait.
-        Model dibuat khusus: consolidation.elimination.entry + line.
-        """
-        if 'consolidation.elimination.line' not in self.env:
-            return []
-        EL = self.env['consolidation.elimination.line'].sudo()
-        domain = [('state', '=', 'posted')]
-        if companies:
-            domain.append(('company_id', 'in', companies.ids))
-        if date_from:
-            domain.append(('date', '>=', date_from))
-        if date_to:
-            domain.append(('date', '<=', date_to))
-        fields_to_read = ['company_id', 'account_id', 'debit', 'credit', 'balance', 'date']
-        return EL.search_read(domain, fields_to_read, limit=0)
-
-    @api.model
     def _bucket_by_company_account(self, records):
         """
         records: list of dict (company_id, account_id, debit, credit, balance)
@@ -304,9 +285,9 @@ class ConsolidationEngine(models.AbstractModel):
         if companies:
             domain.append(('company_id', 'in', companies.ids))
         if date_from:
-            domain.append(('entry_id.date_from', '>=', date_from))
+            domain.append(('entry_id.date', '>=', date_from))
         if date_to:
-            domain.append(('entry_id.date_to', '<=', date_to))
+            domain.append(('entry_id.date', '<=', date_to))
         fields_to_read = ['company_id', 'account_id', 'debit', 'credit', 'balance']
         return EL.search_read(domain, fields_to_read, limit=0)
 
@@ -340,7 +321,7 @@ class ConsolidationEngine(models.AbstractModel):
             ('date', '<=', date_to),
             ('company_id', 'in', tree_ids),
             ('parent_state', '=', 'posted'),
-            ('account_internal_type', 'in', ['receivable', 'payable']),
+            ('account_type', 'in', ['asset_receivable', 'liability_payable']),
             ('balance', '!=', 0.0),
             ('partner_id', '!=', False),
         ]
